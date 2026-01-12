@@ -100,19 +100,17 @@
 //
 
 // fibonacci number
-// function fibNTerm(n) {
-//   if (n === 0 || n == 1) return n;
-//   return fibNTerm(n - 1) + fibNTerm(n - 2);
-// }
+function fibNTerm(n) {
+  if (n === 0 || n == 1) return n;
+  return fibNTerm(n - 1) + fibNTerm(n - 2);
+}
 
-// console.log(fibNTerm(5));
+console.log(fibNTerm(5));
 
 // climbing stairs
 function climb(n) {
-  if (n === 1) return 1;
+  if (n === 0) return 1;
   if (n < 0) return 0;
   return climb(n - 1) + climb(n - 2);
 }
 console.log(climb(5));
-
-// Binary strings
