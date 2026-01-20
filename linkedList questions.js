@@ -4,18 +4,18 @@ function Node(value, next = null) {
 }
 
 let first = new Node(1);
-let second = new Node(0);
-let third = new Node(1);
-let fourth = new Node(2);
-let fifth = new Node(0);
-let sixth = new Node(2);
-let seventh = new Node(1);
+let second = new Node(2);
+let third = new Node(3);
+let fourth = new Node(4);
+let fifth = new Node(5);
+// let sixth = new Node(6);
+// let seventh = new Node(6);
 first.next = second;
 second.next = third;
 third.next = fourth;
 fourth.next = fifth;
-fifth.next = sixth;
-sixth.next = seventh;
+// fifth.next = sixth;
+// sixth.next = seventh;
 let head1 = first;
 
 // let one = new Node(5);
@@ -78,32 +78,139 @@ let head1 = first;
 // console.log(oddEvenList(head1));
 
 // Sort a Linked list of 0s, 1s and 2s -- bruteforce
-function check012(head) {
+// function check012(head) {
+//   let temp = head;
+//   let count0 = 0;
+//   let count1 = 0;
+//   let count2 = 0;
+
+//   while (temp != null) {
+//     if (temp.value == 0) count0 += 1;
+//     else if (temp.value == 1) count1 += 1;
+//     else count2 += 1;
+//     temp = temp.next;
+//   }
+//   temp = head;
+//   while (temp != null) {
+//     if (count0) {
+//       temp.value = 0;
+//       count0--;
+//     } else if (count1) {
+//       temp.value = 1;
+//       count1--;
+//     } else {
+//       temp.value = 2;
+//       count1--;
+//     }
+//     temp = temp.next;
+//   }
+//   return head;
+// }
+// console.log(check012(head1));
+
+// Sort a linked list -- optimal method
+// function check012(head) {
+//   if (head == null || head.next == null) return head;
+//   let zero = new Node(-1);
+//   let one = new Node(-1);
+//   let two = new Node(-1);
+//   let zeroHead = zero;
+//   let oneHead = one;
+//   let twoHead = two;
+//   let temp = head;
+
+//   while (temp != null) {
+//     if (temp.value == 0) {
+//       zero.next = temp;
+//       zero = temp;
+//     } else if (temp.value == 1) {
+//       one.next = temp;
+//       one = temp;
+//     } else {
+//       two.next = temp;
+//       two = temp;
+//     }
+//     temp = temp.next;
+//   }
+//   zero.next = oneHead.next ? oneHead.next : twoHead.next;
+//   one.next = twoHead.next ? twoHead.next : null;
+//   two.next = null;
+//   let newHead = zeroHead.next;
+//   return newHead;
+// }
+// console.log(check012(head1));
+
+//
+
+// ---------------  Linked List Cycle
+
+// function linkedCycle(head) {
+//   if (head == null || head.next == null) return false;
+
+//   let slow = head;
+//   let fast = head;
+
+//   while (fast != null && fast.next != null) {
+//     slow = slow.next;
+//     fast = fast.next.next;
+
+//     if (slow === fast) return true;
+//   }
+//   return false;
+// }
+// console.log(linkedCycle(head1));
+
+//
+
+// --------- Remove Linked List Elements
+// ([1, 2, 6, 3, 4, 5, 6], (val = 6));
+
+// function removeElem(head, val) {
+//   let dummy = new Node(-1);
+//   dummy.next = head;
+//   let curr = head;
+//   let prev = dummy;
+
+//   while (curr != null) {
+//     if (curr.value == val) {
+//       prev.next = curr.next;
+//       curr = curr.next;
+//     } else {
+//       prev = curr;
+//       curr = curr.next;
+//     }
+//   }
+//   return dummy.next;
+// }
+// console.dir(removeElem(head1, 7), { depth: null });
+
+// 1, 2, 3, 4, 5, 6
+// Remove middle of linked list
+// var middleNode = function (head) {
+//   let slow = head;
+//   let fast = head;
+
+//   while (fast != null && fast.next != null) {
+//     slow = slow.next;
+//     fast = fast.next.next;
+//   }
+//   return slow;
+// };
+
+// console.log(middleNode(head1));
+
+//
+
+// convert binary number in ll in integer
+// Input: head = [1, 0, 1];
+
+var getDecimalValue = function (head) {
+  let arr = [];
   let temp = head;
-  let count0 = 0;
-  let count1 = 0;
-  let count2 = 0;
 
   while (temp != null) {
-    if (temp.value == 0) count0 += 1;
-    else if (temp.value == 1) count1 += 1;
-    else count2 += 1;
+    arr.push(temp.val);
     temp = temp.next;
   }
-  temp = head;
-  while (temp != null) {
-    if (count0) {
-      temp.value = 0;
-      count0--;
-    } else if (count1) {
-      temp.value = 1;
-      count1--;
-    } else {
-      temp.value = 2;
-      count1--;
-    }
-    temp = temp.next;
-  }
-  return head;
-}
-console.log(check012(head1));
+  let convertedInt = arr.split("");
+};
