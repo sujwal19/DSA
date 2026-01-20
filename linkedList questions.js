@@ -4,16 +4,16 @@ function Node(value, next = null) {
 }
 
 let first = new Node(1);
-let second = new Node(2);
-let third = new Node(3);
-let fourth = new Node(4);
-let fifth = new Node(5);
+let second = new Node(0);
+let third = new Node(1);
+// let fourth = new Node(4);
+// let fifth = new Node(5);
 // let sixth = new Node(6);
 // let seventh = new Node(6);
 first.next = second;
 second.next = third;
-third.next = fourth;
-fourth.next = fifth;
+// third.next = fourth;
+// fourth.next = fifth;
 // fifth.next = sixth;
 // sixth.next = seventh;
 let head1 = first;
@@ -205,12 +205,68 @@ let head1 = first;
 // Input: head = [1, 0, 1];
 
 var getDecimalValue = function (head) {
-  let arr = [];
   let temp = head;
-
+  let ans = 0;
   while (temp != null) {
-    arr.push(temp.val);
+    ans = ans * 2;
+    ans += temp.value;
     temp = temp.next;
+    // ans++;
   }
-  let convertedInt = arr.split("");
+  console.log(ans);
 };
+
+console.log(getDecimalValue(head1));
+
+//
+
+// Remove nth node from the end
+
+// #1 bruteforce
+// function removeNode(head, n) {
+//   let count = 0;
+//   let temp = head;
+
+//   while (temp != null) {
+//     count++;
+//     temp = temp.next;
+//   }
+//   if (count == n) {
+//     let newHead = head.next;
+//     return newHead;
+//   }
+//   let res = count - n;
+//   temp = head;
+
+//   while (temp != null) {
+//     res--;
+//     if (res == 0) {
+//       break;
+//     }
+//     temp = temp.next;
+//   }
+//   temp.next = temp.next.next;
+//   return head;
+// }
+// console.dir(removeNode(head1, 2), { depth: null });
+
+// // optimal approach #2
+// function removeNode(head, n) {
+//   let slow = head;
+//   let fast = head;
+
+//   for (i = 0; i < n; i++) {
+//     fast = fast.next;
+//   }
+
+//   if (fast == null) return head.next;
+
+//   while (fast.next != null) {
+//     slow = slow.next;
+//     fast = fast.next;
+//   }
+
+//   slow.next = slow.next.next;
+//   return head;
+// }
+// console.dir(removeNode(head1, 1), { depth: null });
