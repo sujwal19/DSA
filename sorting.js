@@ -45,31 +45,58 @@ let arr = [1, 5, 2, 3, 7, 4, 6];
 // }
 // console.log(insertionSort(arr));
 
-function mergeSort(arr) {
-  if (arr.length <= 1) return arr;
+// let s = "anagram";
+// let t = "naoaram";
+// var isAnagram = function (s, t) {
+//   let count = {};
+//   for (let char of s) {
+//     count[char] = (count[char] || 0) + 1;
+//   }
+//   for (let char of t) {
+//     if (!count[char]) return false;
+//     count[char] -= 1;
+//   }
+//   return true;
+// };
+// console.log(isAnagram(s, t));
 
-  let mid = arr.length / 2;
-  let left = mergeSort(arr.slice(0, mid));
-  let right = mergeSort(arr.slice(mid));
+let nums = [1, 1, 1, 1, 1, 1, 1, 1, 1, 13, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+//
 
-  return merge(left, right);
-}
+var search = function (nums, target) {
+  let low = 0;
+  let high = nums.length - 1;
 
-function merge(left, right) {
-  let result = [];
-  let i = 0;
-  let j = 0;
+  while (low <= high) {
+    let mid = Math.floor((low + high) / 2);
 
-  while (i < left.length && j < right.length) {
-    if (left[i] <= right[j]) {
-      result.push(left[i]);
-      i = i + 1;
-    } else {
-      result.push(right[j]);
-      j = j + 1;
+    if (nums[mid] === target) return true;
+
+    // Case 1: duplicates block us
+    if (nums[low] === nums[mid] && nums[mid] === nums[high]) {
+      low++;
+      high--;
+    }
+    // Case 2: left half sorted
+    else if (nums[low] <= nums[mid]) {
+      if (nums[low] <= target && target < nums[mid]) {
+        high = mid - 1;
+      } else {
+        low = mid + 1;
+      }
+    }
+    // Case 3: right half sorted
+    else {
+      if (nums[mid] < target && target <= nums[high]) {
+        low = mid + 1;
+      } else {
+        high = mid - 1;
+      }
     }
   }
-  return result.concat(left.slice(i)).concat(right.slice(j));
-}
+  return false;
+};
 
-console.log(mergeSort(arr));
+//
+
+console.log(search(nums, 13));
