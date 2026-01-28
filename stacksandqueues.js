@@ -97,8 +97,7 @@
 //
 
 // Valid Parentheses
-let s = "([])";
-
+let s = "([{}]())";
 var isValid1 = function (s) {
   let stack = [];
   for (let i = 0; i < s.length; i++) {
@@ -113,23 +112,28 @@ var isValid1 = function (s) {
   }
   return stack.length == 0;
 };
+// console.log(isValid1(s));
 
-// var isValid2 = function (s) {
-//   let stack = [];
-//   for (let i = 0; i < s.length; i++) {
-//     if (s[i] == "(" || s[i] == "{" || s[i] == "[") {
-//       stack.push(s[i]);
-//     } else {
-//       if (stack[stack.length - 1] != s[i]) {
-//         stack.pop();
-//       }
-//     }
-//   }
-//   return stack.length == 0;
-// };
+var isValid2 = function (s) {
+  let stack = [];
+  for (let i = 0; i < s.length; i++) {
+    if (s[i] == "(" || s[i] == "{" || s[i] == "[") {
+      stack.push(s[i]);
+    } else {
+      console.log(stack.length);
+      if (stack.length == 0) return false;
+      let top = stack[stack.length - 1];
+      stack.pop();
+      if (s[i] == ")" && top == "(") stack.pop();
+      else if (s[i] == "}" && top == "}") stack.pop();
+      else if (s[i] == "]" && top == "]") stack.pop();
+      else return false;
+    }
+  }
+  return stack.length == 0;
+};
 
-console.log(isValid1(s));
-// console.log(isValid2(s));
+console.log(isValid2(s));
 
 // var isValid = function (s) {
 //   const stack = [];
@@ -184,3 +188,29 @@ console.log(isValid1(s));
 //   return outputArr.length > 0 ? false : true;
 // };
 // see valid patentheses solutions ------------------------------ IMP --------------------------------------------------
+
+//
+
+// Greater Element I // bruteforce approach
+// var nextGreaterElement = function (nums1, nums2) {
+//   let ans = [];
+
+//   for (let i = 0; i < nums1.length; i++) {
+//     let found = false;
+//     for (let j = 0; j < nums2.length; j++) {
+//       if (nums1[i] === nums2[j]) {
+//         for (let k = j + 1; k < nums2.length; k++) {
+//           if (nums1[i] < nums2[k]) {
+//             ans.push(nums2[k]);
+//             found = true;
+//             break;
+//           }
+//         }
+//         break;
+//       }
+//     }
+//     if (!found) ans.push(-1);
+//   }
+//   return ans;
+// };
+// console.log(nextGreaterElement(nums1, nums2));
