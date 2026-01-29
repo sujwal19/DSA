@@ -97,16 +97,17 @@
 //
 
 // Valid Parentheses
-let s = "([{}]())";
+let s = "([{}])";
 var isValid1 = function (s) {
   let stack = [];
   for (let i = 0; i < s.length; i++) {
     if (s[i] == "(") stack.push(")");
     else if (s[i] == "{") stack.push("}");
     else if (s[i] == "[") stack.push("]");
-    else if (s[i] == ")" || s[i] == "}" || s[i] == "]") {
+    else {
       if (stack.length == 0) return false;
-      else if (s[i] != stack[stack.length - 1]) return false;
+      let top = stack[stack.length - 1];
+      if (s[i] != top) return false;
       else stack.pop();
     }
   }
@@ -120,20 +121,18 @@ var isValid2 = function (s) {
     if (s[i] == "(" || s[i] == "{" || s[i] == "[") {
       stack.push(s[i]);
     } else {
-      console.log(stack.length);
       if (stack.length == 0) return false;
-      let top = stack[stack.length - 1];
-      stack.pop();
-      if (s[i] == ")" && top == "(") stack.pop();
-      else if (s[i] == "}" && top == "}") stack.pop();
-      else if (s[i] == "]" && top == "]") stack.pop();
+      let ch = stack[stack.length - 1];
+      if (s[i] == ")" && ch == "(") stack.pop();
+      else if (s[i] == "}" && ch == "{") stack.pop();
+      else if (s[i] == "]" && ch == "[") stack.pop();
       else return false;
     }
   }
   return stack.length == 0;
 };
 
-console.log(isValid2(s));
+// console.log(isValid2(s));
 
 // var isValid = function (s) {
 //   const stack = [];
@@ -214,3 +213,178 @@ console.log(isValid2(s));
 //   return ans;
 // };
 // console.log(nextGreaterElement(nums1, nums2));
+
+//
+
+// Infix to PostFix
+function priority(op) {
+  if (op == "+" || op == "-") return 1;
+  if (op == "*" || op == "/") return 1;
+  if (op == "^") return 1;
+  return 0;
+}
+
+function isOperand(ch) {
+  return (
+    (ch >= "A" && ch <= "z") ||
+    (ch >= "a" && ch <= "z") ||
+    (ch >= 0 && ch <= "9")
+  );
+}
+
+function convertToPostfix(exp) {
+  let ans = "";
+  let stack = [];
+
+  for (let i = 0; i < exp.length; i++) {
+    let ch = exp[i];
+
+    // Operand
+    if (isOperand(ch)) {
+      ans = ans + ch;
+    }
+    // Left Parentheses
+    else if (ch == "(") {
+      stack.push(ch);
+    }
+    // Right Parentheses
+    else if (ch == ")") {
+      while (stack.length && stack[stack.length - 1] !== "(") {
+        ans = ans + stack.pop();
+      }
+      stack.pop();
+    }
+    // Operator
+    else {
+      while (
+        stack.length &&
+        priority(ch) <= priority(stack[stack.length - 1])
+      ) {
+        ans = ans + stack.pop();
+      }
+      stack.push(ch);
+    }
+  }
+  while (stack.length) {
+    ans = ans + stack.pop();
+  }
+  return ans;
+}
+
+class Stack {
+  constructor() {
+    this.items = [];
+  }
+
+  push(value) {
+    return this.items.push(value);
+  }
+
+  pop() {
+    if (this.isEmpty()) return null;
+    return this.items.pop();
+  }
+
+  top() {
+    if (this.isEmpty()) return null;
+    return this.items[this.items.length - 1];
+  }
+
+  isEmpty() {
+    return this.items.length === 0;
+  }
+}
+
+let str = "A+B*C";
+
+function reverse(str) {
+  let reverseStr = "";
+  for (let i = str.length - 1; i >= 0; i--) {
+    if (str[i] == "(") reverseStr += ")";
+    else if (str[i] == ")") {
+      reverseStr += "(";
+    } else {
+      reverseStr += str[i];
+    }
+  }
+  return reverseStr;
+}
+
+// console.log(str);
+
+function convertToPostfixUsingStack(exp) {
+  let ans = "";
+  let stack = new Stack();
+
+  for (let i = 0; i < exp.length; i++) {
+    let ch = exp[i];
+
+    if (isOperand(ch)) {
+      ans += ch;
+    }
+    //
+    else if (ch == "(") {
+      stack.push(ch);
+    }
+    //
+    else if (ch == ")") {
+      while (!stack.isEmpty() && stack.top() != "(") {
+        ans += stack.pop();
+      }
+      stack.pop();
+    }
+    //
+    else {
+      while (!stack.isEmpty() && priority(ch) <= priority(stack.top())) {
+        ans += stack.pop();
+      }
+      stack.push(ch);
+    }
+  }
+  while (!stack.isEmpty()) {
+    ans = ans + stack.pop();
+  }
+  return ans;
+}
+
+//
+
+function convertToPrefix(exp) {
+  let result = "";
+  let stack = [];
+
+  for (let i = exp.length - 1; i >= 0; i--) {
+    let ch = exp[i];
+    if (isOperand(ch)) {
+      result = ch + result;
+    }
+    //
+    else if (ch == ")") {
+      stack.push(ch);
+    }
+    //
+    else if (ch == "(") {
+      while (stack.length && stack[stack.length - 1] != ")") {
+        result = stack.pop() + result;
+      }
+      stack.pop();
+    }
+    //
+    else {
+      while (
+        stack.length &&
+        (priority(ch) < priority(stack[stack.length - 1]) ||
+          (priority(ch) === priority(stack[stack.length - 1]) && ch !== "^"))
+      ) {
+        result = stack.pop() + result;
+      }
+      stack.push(ch);
+    }
+  }
+  while (stack.length) {
+    result = stack.pop() + result;
+  }
+  return result;
+}
+
+console.log(convertToPrefix("(A+B)*C"));
