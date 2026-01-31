@@ -429,10 +429,8 @@ function convertToPrefixfromPostfix(exp) {
     if (isOperand(ch)) {
       stack.push(ch);
     } else {
-      let t1 = stack[stack.length - 1];
-      stack.pop();
-      let t2 = stack[stack.length - 1];
-      stack.pop();
+      let t1 = stack.pop();
+      let t2 = stack.pop();
       let s = ch + t2 + t1;
       stack.push(s);
     }
@@ -449,10 +447,8 @@ function convertToPostfixfromPrefix(exp) {
     if (isOperand(ch)) {
       stack.push(ch);
     } else {
-      let t1 = stack[stack.length - 1];
-      stack.pop();
-      let t2 = stack[stack.length - 1];
-      stack.pop();
+      let t1 = stack.pop();
+      let t2 = stack.pop();
       let s = t1 + t2 + ch;
       stack.push(s);
     }
@@ -494,16 +490,102 @@ let logs = ["d1/", "d2/", "../", "d21/", "./"];
 var minOperations = function (logs) {
   let depth = 0;
 
-  for (let i = 0; i < logs.length; i++) {
-    let log = logs[i];
+  for (let log of logs) {
     if (log == "../") {
-      if (depth != 0) depth -= 1;
-    } else if (log == "./") depth = depth;
-    else {
-      depth += 1;
+      if (depth > 0) depth--;
+    } else if (log != "./") {
+      depth++;
     }
   }
   return depth;
 };
 
-console.log(minOperations(logs));
+// console.log(minOperations(logs));
+
+//
+
+//
+let nums1 = [4, 1, 2];
+let nums2 = [1, 3, 4, 2];
+
+function nextGreaterElement(nums1, nums2) {
+  let stack = [];
+  for (let i = 0; i < nums1.length; i++) {
+    let found = false;
+    for (let j = 0; j < nums2.length; j++) {
+      if (nums1[i] == nums2[j]) {
+        for (let k = j + 1; k < nums2.length; k++) {
+          if (nums1[i] < nums2[k]) {
+            stack.push(nums2[k]);
+            found = true;
+            break;
+          }
+        }
+        break;
+      }
+    }
+    if (!found) stack.push(-1);
+  }
+  return stack;
+}
+//
+let monotonicStackArr = [1, 2, 3, 4, 3];
+
+function nextGreaterElem(arr) {
+  let stack = [];
+  let nge = [];
+  for (let i = arr.length - 1; i >= 0; i--) {
+    while (stack.length && stack[stack.length - 1] <= arr[i]) {
+      stack.pop();
+    }
+    if (stack.length == 0) nge[i] = -1;
+    else nge[i] = stack[stack.length - 1];
+    stack.push(arr[i]);
+  }
+
+  return nge;
+}
+
+//
+let arr = [1, 2, 3, 4, 3];
+//
+// bruteforce
+function nextGreaterElementII(arr) {
+  let nge = [];
+  let n = arr.length;
+  for (let i = 0; i < n; i++) {
+    nge[i] = -1;
+    for (let j = i + 1; j < i + n; j++) {
+      let ind = j % n;
+      if (arr[ind] > arr[i]) {
+        nge[i] = arr[ind];
+        break;
+      }
+    }
+  }
+  return nge;
+}
+
+// optimal
+function nextGreaterElemII(arr) {
+  let stack = [];
+  let nge = [];
+  let n = arr.length;
+  for (let i = 2 * n - 1; i >= 0; i--) {
+    while (stack.length && stack[stack.length - 1] <= arr[i % n]) {
+      stack.pop();
+    }
+    if (i < n) {
+      if (stack.length == 0) nge[i] = -1;
+      else nge[i] = stack[stack.length - 1];
+    }
+    stack.push(arr[i % n]);
+  }
+
+  return nge;
+}
+
+// console.log(nextGreaterElem(monotonicStackArr));
+// console.log(nextGreaterElement(nums1, nums2));
+// console.log(nextGreaterElementII(arr));
+console.log(nextGreaterElemII(arr));
