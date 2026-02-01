@@ -528,6 +528,8 @@ function nextGreaterElement(nums1, nums2) {
   }
   return stack;
 }
+// console.log(nextGreaterElement(nums1, nums2));
+
 //
 let monotonicStackArr = [1, 2, 3, 4, 3];
 
@@ -538,13 +540,13 @@ function nextGreaterElem(arr) {
     while (stack.length && stack[stack.length - 1] <= arr[i]) {
       stack.pop();
     }
-    if (stack.length == 0) nge[i] = -1;
+    if (stack.length === 0) nge[i] = -1;
     else nge[i] = stack[stack.length - 1];
     stack.push(arr[i]);
   }
-
   return nge;
 }
+// console.log(nextGreaterElem(monotonicStackArr));
 
 //
 let arr = [1, 2, 3, 4, 3];
@@ -585,7 +587,21 @@ function nextGreaterElemII(arr) {
   return nge;
 }
 
-// console.log(nextGreaterElem(monotonicStackArr));
-// console.log(nextGreaterElement(nums1, nums2));
 // console.log(nextGreaterElementII(arr));
-console.log(nextGreaterElemII(arr));
+// console.log(nextGreaterElemII(arr));
+
+//
+let tickets = [2, 3, 2];
+let k = 2;
+var timeRequiredToBuy = function (tickets, k) {
+  let time = 0;
+
+  for (let i = 0; i < tickets.length; i++) {
+    if (i < k) time += Math.min(tickets[i], tickets[k]);
+    else if (i === k) time += tickets[k];
+    else time += Math.min(tickets[k] - 1, tickets[i]);
+  }
+  return time;
+};
+
+console.log(timeRequiredToBuy(tickets, k));
