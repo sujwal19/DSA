@@ -603,5 +603,43 @@ var timeRequiredToBuy = function (tickets, k) {
   }
   return time;
 };
+// console.log(timeRequiredToBuy(tickets, k));
 
-console.log(timeRequiredToBuy(tickets, k));
+//
+let str = "leetcoode";
+var firstUniqChar = function (str) {
+  for (let i = 0; i < str.length; i++) {
+    if (str.indexOf(str[i]) === str.lastIndexOf(str[i])) {
+      return i;
+    }
+  }
+  return -1;
+};
+// console.log(firstUniqChar(str));
+
+//
+let height = [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1];
+var trap = function (height) {
+  let leftMax = 0;
+  let rightMax = 0;
+  let totalWater = 0;
+  let l = 0;
+  let r = height.length - 1;
+
+  while (l < r) {
+    if (height[l] <= height[r]) {
+      if (leftMax > height[l]) {
+        totalWater += leftMax - height[l];
+      } else leftMax = height[l];
+      l++;
+    } else {
+      if (rightMax > height[r]) {
+        totalWater += rightMax - height[r];
+      } else rightMax = height[r];
+      r--;
+    }
+  }
+  return totalWater;
+};
+
+console.log(trap(height));
