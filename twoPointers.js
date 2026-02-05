@@ -185,4 +185,82 @@ var maxArea = function (height) {
   }
   return maxWater;
 };
-console.log(maxArea(height));
+// console.log(maxArea(height));
+
+//
+
+//
+let numsOfRemoveElement = [3, 2, 2, 3];
+let val = 3;
+// bruteforce
+var removeElementBruteforce = function (nums, val) {
+  let newNum = [];
+
+  for (let j = 0; j < nums.length; j++) {
+    if (nums[j] == val) {
+      newNum.push("");
+    } else {
+      newNum.unshift(nums[j]);
+    }
+  }
+  return newNum;
+};
+
+var removeElement = function (nums, val) {
+  let i = 0;
+  let j = 0;
+
+  while (j < nums.length) {
+    if (nums[j] != val) {
+      nums[i] = nums[j];
+      i++;
+    }
+    j++;
+  }
+  return i;
+};
+
+// console.log(removeElement(numsOfRemoveElement, val));
+
+//
+let nums1 = [0, 1, 0, 3, 12];
+var moveZeroes = function (nums) {
+  let i = 0;
+
+  for (let j = 0; j < nums.length; j++) {
+    if (nums[j] != 0) {
+      if (i !== j) {
+        nums[i] = nums[j];
+      }
+      i++;
+    }
+  }
+  while (i < nums.length) {
+    nums[i] = 0;
+    i++;
+  }
+  return nums;
+};
+
+// console.log(moveZeroes(nums1));
+
+//
+
+//
+let nums2 = [3, 1, 2, 4];
+var sortArrayByParity = function (nums) {
+  let i = 0;
+
+  for (let j = 0; j < nums.length; j++) {
+    if (nums[j] % 2 == 0) {
+      let temp = nums[i];
+      nums[i] = nums[j];
+      nums[j] = temp;
+
+      i++;
+    }
+  }
+  return nums;
+};
+
+console.log(sortArrayByParity(nums2));
