@@ -38,9 +38,7 @@ var longestSubarrayBetter = function (aee, k) {
       sum -= aee[l]; // condition
       l++; // constant
     }
-    if (sum <= k) {
-      maxLen = Math.max(maxLen, r - l + 1); // constant
-    }
+    maxLen = Math.max(maxLen, r - l + 1); // constant
     r++; // constant
   }
   return maxLen;
@@ -217,7 +215,7 @@ var removeElement = function (nums, val) {
     }
     j++;
   }
-  return i;
+  return nums;
 };
 
 // console.log(removeElement(numsOfRemoveElement, val));
@@ -263,4 +261,116 @@ var sortArrayByParity = function (nums) {
   return nums;
 };
 
-console.log(sortArrayByParity(nums2));
+// console.log(sortArrayByParity(nums2));
+
+//
+
+//
+let arr = [1, 0, 2, 3, 0, 4, 5, 0];
+var duplicateZeros = function (arr) {};
+// console.log(duplicateZeros(arr));
+
+//
+
+//
+let str2 = "leetcode";
+let k2 = 3;
+var maxVowels = function (s, k) {
+  let vowels = new Set(["a", "e", "i", "o", "u"]);
+
+  let left = 0;
+  let right = 0;
+  let count = 0;
+  let maxCount = 0;
+
+  while (right < s.length) {
+    if (vowels.has(s[right])) {
+      count++;
+    }
+
+    if (right - left + 1 === k) {
+      maxCount = Math.max(maxCount, count);
+
+      if (vowels.has(s[left])) {
+        count--;
+      }
+      left++;
+    }
+
+    right++;
+  }
+  return maxCount;
+};
+
+// console.log(maxVowels(str2, k2));
+
+//
+
+// Sets // ----------------------
+// let sh = new Set();
+// sh.add(1);
+// sh.add(2);
+// sh.add(2); // duplicate ignored
+// console.log(sh); // Set {1, 2}
+// console.log(sh.size);
+//.......
+// let arr2 = [1, 2, 2, 3];
+// let unique = [...new Set(arr2)]; // [1,2,3]
+// console.log(unique);
+//.....
+// let shr = new Set([1, 2, 3]);
+// if (!shr.has(4)) shr.add(4);
+// console.log(shr);
+//......
+
+//
+
+//
+let arr2 = [2, 2, 2, 2, 5, 5, 5, 8];
+let k3 = 3;
+let threshold = 4;
+
+var numOfSubarrays = function (arr, k, threshold) {
+  let left = 0;
+  let sum = 0;
+  let count = 0;
+
+  for (let right = 0; right < arr.length; right++) {
+    sum += arr[right];
+
+    if (right - left + 1 === k) {
+      //average = k / sum ​≥ threshold
+      // => sum >= threshold * k
+      if (sum >= k * threshold) {
+        count++;
+      }
+      sum -= arr[left];
+      left++;
+    }
+  }
+  return count;
+};
+
+// console.log(numOfSubarrays(arr2, k3, threshold));
+
+let st2 = "IceCreAm";
+var reverseVowels = function (s) {
+  let arr = s.split("");
+  let left = 0;
+  let right = s.length - 1;
+  let vowels = new Set(["a", "e", "i", "o", "u", "A", "E", "I", "O", "U"]);
+
+  while (left < right) {
+    while (left < right && !vowels.has(arr[left])) left++; // skip non-vowels on left
+    while (left < right && !vowels.has(arr[right])) right--; // skip non-vowels on right
+
+    if (vowels.has(arr[left]) && vowels.has(arr[right])) {
+      [arr[left], arr[right]] = [arr[right], arr[left]];
+      left++;
+      right--;
+    }
+  }
+  return arr.join("");
+};
+
+console.log(reverseVowels(st2));
