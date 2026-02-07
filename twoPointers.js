@@ -273,6 +273,7 @@ var duplicateZeros = function (arr) {};
 //
 
 //
+
 let str2 = "leetcode";
 let k2 = 3;
 var maxVowels = function (s, k) {
@@ -373,4 +374,101 @@ var reverseVowels = function (s) {
   return arr.join("");
 };
 
-console.log(reverseVowels(st2));
+// console.log(reverseVowels(st2));
+
+//
+
+//
+let nums4 = [1, 2, 3, 1];
+let k4 = 3;
+var containsNearbyDuplicate = function (nums, k) {
+  let left = 0;
+  let set = new Set();
+
+  for (let right = 0; right < nums.length; right++) {
+    if (set.has(nums[right])) return true;
+    set.add(nums[right]);
+
+    if (right - left >= k) {
+      set.delete(nums[left]);
+      left++;
+    }
+  }
+  return false;
+};
+// console.log(containsNearbyDuplicate(nums4, k4));
+
+let cardPoints = [1, 2, 3, 4, 5, 6, 1];
+let k5 = 3;
+var maxScore = function (cardPoints, k) {
+  let leftSum = 0;
+  let rightSum = 0;
+  let maxSum = 0;
+  let n = cardPoints.length;
+
+  for (let i = 0; i < k; i++) {
+    leftSum += cardPoints[i];
+    maxSum = leftSum;
+  } // tc = O(2k) // sc = O(1)
+
+  let rightIdx = n - 1;
+
+  for (let i = k - 1; i >= 0; i--) {
+    leftSum = leftSum - cardPoints[i];
+    rightSum += cardPoints[rightIdx];
+    rightIdx = rightIdx - 1;
+    maxSum = Math.max(maxSum, leftSum + rightSum);
+  }
+  return maxSum;
+};
+// console.log(maxScore(cardPoints, k5));
+
+//
+
+//
+var lengthOfLongestSubstring = function (s) {
+  let left = 0;
+  let set = new Set();
+  let maxLen = 0;
+
+  for (let right = 0; right < s.length; right++) {
+    if (set.has(s[right])) {
+      while (set.has(s[right])) {
+        set.delete(s[left]);
+        left++;
+      }
+      set.add(s[right]);
+    } else {
+      set.add(s[right]);
+    }
+    maxLen = Math.max(right - left + 1, maxLen);
+  }
+  return maxLen;
+};
+
+// console.log(lengthOfLongestSubstring("pwwkew"));
+
+//
+
+//
+var longestOnes = function (nums, k) {
+  let count = 0;
+  let maxCount = 0;
+  let zeroes = 0;
+
+  for (let right = 0; right < nums.length; right++) {
+    if (nums[right] == 1) {
+      count++;
+    } else {
+      if (zeroes < k) {
+        zeroes++;
+        count++;
+      } else {
+        count = 0;
+      }
+    }
+    maxCount = Math.max(maxCount, count);
+  }
+  return maxCount;
+};
+console.log(longestOnes([1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0], 2));
