@@ -641,5 +641,45 @@ var trap = function (height) {
   }
   return totalWater;
 };
+// console.log(trap(height));
 
-console.log(trap(height));
+//
+var sumSubarrayMins = function (arr) {
+  const n = arr.length;
+  let left = new Array(n);
+  let right = new Array(n);
+  const MOD = 10 ** 9 + 7;
+  let stack = [];
+
+  // Previous smaller
+  for (let i = 0; i < n; i++) {
+    while (stack.length && arr[stack[stack.length - 1]] > arr[i]) {
+      stack.pop();
+    }
+    left[i] = stack.length === 0 ? -1 : stack[stack.length - 1];
+    stack.push(i);
+  }
+
+  // clear stack
+  stack.length = 0;
+
+  // Next smaller or equal element
+  for (let i = n - 1; i >= 0; i--) {
+    while (stack.length && arr[stack[stack.length - 1]] >= arr[i]) {
+      stack.pop();
+    }
+    right[i] = stack.length === 0 ? n : stack[stack.length - 1];
+    stack.push(i);
+  }
+
+  // Count Contributions
+  let result = 0;
+  for (let i = 0; i < n; i++) {
+    const leftCount = i - left[i];
+    const rightCount = right[i] - i;
+
+    result = (result + arr[i] * leftCount * rightCount) % MOD;
+  }
+  return result;
+};
+// console.log(sumSubarrayMins([3, 1, 2, 4]));

@@ -452,23 +452,22 @@ var lengthOfLongestSubstring = function (s) {
 
 //
 var longestOnes = function (nums, k) {
-  let count = 0;
-  let maxCount = 0;
+  let left = 0;
+  let maxLen = 0;
   let zeroes = 0;
 
   for (let right = 0; right < nums.length; right++) {
-    if (nums[right] == 1) {
-      count++;
-    } else {
-      if (zeroes < k) {
-        zeroes++;
-        count++;
-      } else {
-        count = 0;
-      }
+    if (nums[right] === 0) zeroes++;
+
+    while (zeroes > k) {
+      if (nums[left] === 0) zeroes--;
+      left++;
     }
-    maxCount = Math.max(maxCount, count);
+    maxLen = Math.max(maxLen, right - left + 1);
   }
-  return maxCount;
+  return maxLen;
 };
-console.log(longestOnes([1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0], 2));
+
+// console.log(
+//   longestOnes([0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1], 3),
+// );
