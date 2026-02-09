@@ -471,3 +471,24 @@ var longestOnes = function (nums, k) {
 // console.log(
 //   longestOnes([0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1], 3),
 // );
+
+let nums5 = [2, 7, 11, 15];
+let t1 = 9;
+function goodBoy(nums, target) {
+  let left = 0;
+  let sum = 0;
+
+  for (let right = 0; right < nums.length; right++) {
+    sum += nums[right];
+
+    if (sum == target) return [left, right];
+
+    while (sum > target) {
+      sum -= nums[left];
+      left++;
+    }
+  }
+  return sum;
+}
+
+console.log(goodBoy(nums5, t1));
