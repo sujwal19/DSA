@@ -269,12 +269,113 @@ var isPerfectSquare = function (num) {
 var arrangeCoins = function (n) {
   let coinsLeft = n;
   let row = 0;
-
   while (coinsLeft >= row) {
     coinsLeft -= row;
     row++;
   }
-
   return row - 1;
 };
-console.log(arrangeCoins(5));
+// console.log(arrangeCoins(5));
+
+var arrangeCoinsUsingBS = function (n) {
+  let left = 0;
+  let right = n;
+  while (left <= right) {
+    let mid = Math.floor((left + right) / 2);
+    let coinsNeeded = (mid * (mid + 1)) / 2;
+
+    if (coinsNeeded === n) {
+      return mid;
+    } else if (coinsNeeded > n) {
+      right = mid - 1;
+    } else left = mid + 1;
+  }
+  return right;
+};
+// console.log(arrangeCoinsUsingBS(5));
+
+//
+let arr1 = [4, 5, 8];
+let arr2 = [10, 9, 1, 8];
+let d = 2;
+var findTheDistanceValue = function (arr1, arr2, d) {
+  let count = 0;
+  for (let i = 0; i < arr1.length; i++) {
+    let isSafe = true;
+
+    for (let j = 0; j < arr2.length; j++) {
+      if (Math.abs(arr1[i] - arr2[j]) <= d) {
+        isSafe = false;
+        break;
+      }
+    }
+    if (isSafe) count++;
+  }
+  return count;
+};
+// console.log(findTheDistanceValue(arr1, arr2, d));
+
+var findTheDistanceValueUsingBS = function (arr1, arr2, d) {
+  let count = 0;
+  let sortedArr = arr2.sort((a, b) => a - b);
+
+  for (let i = 0; i < arr1.length; i++) {
+    let target = arr1[i];
+    let valid = true;
+    let low = target - d;
+    let high = target + d;
+    let left = 0;
+    let right = sortedArr.length - 1;
+
+    while (left <= right) {
+      let mid = Math.floor((left + right) / 2);
+      if (sortedArr[mid] < low) {
+        left = mid + 1;
+      } else if (sortedArr[mid] > high) {
+        right = mid - 1;
+      } else {
+        valid = false;
+        break;
+      }
+    }
+    if (valid) count++;
+  }
+  return count;
+};
+
+// console.log(findTheDistanceValueUsingBS(arr1, arr2, d));
+
+//
+
+//
+let arr = [2, 3, 4, 7, 11];
+let k = 5;
+var findKthPositive = function (arr, k) {
+  let n = arr.length;
+  for (let i = 0; i < n; i++) {
+    let missing_before = arr[i] - (i + 1);
+    if (missing_before >= k) {
+      return k + i;
+    }
+  }
+  return k + n;
+};
+// console.log(findKthPositive(arr, k));
+
+var findKthPositiveUsingBS = function (arr, k) {
+  let lo = 0;
+  let hi = arr.length - 1;
+
+  while (lo <= hi) {
+    let mid = Math.floor((lo + hi) / 2);
+    let missingCount = arr[mid] - (mid + 1);
+    if (missingCount >= k) {
+      hi = mid - 1;
+    } else {
+      lo = mid + 1;
+    }
+  }
+  return k + lo;
+};
+
+console.log(findKthPositiveUsingBS(arr, k));
