@@ -452,82 +452,6 @@ var answerQueries = function (nums, queries) {
 // TC = O(n log n + n + N log n) → O((n + N) log n) ✅
 // Total SC = O(n + N) ✅
 
-// note for this
-// function note(){
-//   Perfect! Let’s organize this neatly so you can **take notes that actually help you remember the pattern**. I’ll break it down step by step.
-
-// ---
-
-// ## **Problem Note Template**
-
-// **1️⃣ Problem Type / Category:**
-
-// * **Type:** Greedy + Prefix Sum + Binary Search
-// * **Category:** “Maximize number of elements under sum constraint”
-
-// **2️⃣ Core Trick / Insight:**
-
-// * Sort the array ascending → always pick **smallest numbers first**.
-// * Build **prefix sums** → cumulative totals let you check “how many numbers can fit” efficiently.
-// * Use **binary search** on prefix → find the **rightmost index** ≤ query → gives max count.
-
-// **3️⃣ Why it works:**
-
-// * Sorting ensures smallest numbers are considered first → maximizes count.
-// * Prefix sums allow **fast cumulative sum checks** instead of summing repeatedly.
-// * Binary search reduces query time from O(n) → O(log n).
-
-// **4️⃣ What should trigger this pattern in the future:**
-
-// * The problem asks for: **“maximum number of elements under sum constraint”**
-// * Order of elements **does not matter**
-// * Multiple queries for different sums → need efficiency
-// * If you see: “maximize count with sum ≤ limit” → **think: sort → prefix → binary search**
-
-// **5️⃣ Common Mistakes / Pitfalls:**
-
-// * Trying to use sliding window → wrong if elements don’t need to be contiguous.
-// * Forgetting prefix sums → summing raw numbers leads to wrong answers.
-// * Counting individual numbers ≤ query instead of checking cumulative sum.
-// * Incrementing a counter inside binary search → wrong; should rely on the **last valid index**.
-// * Using `prefix[i + 1]` in a forward loop → undefined / NaN.
-
-// **6️⃣ Quick Reference / Formula:**
-
-// * Build prefix:
-
-// ```js
-// prefix[0] = sorted[0];
-// prefix[i] = prefix[i-1] + sorted[i];
-// ```
-
-// * Binary search for query `q`:
-
-// ```js
-// let low = 0, high = prefix.length - 1, lastValid = -1;
-// while (low <= high) {
-//     let mid = Math.floor((low+high)/2);
-//     if (prefix[mid] <= q) { lastValid = mid; low = mid+1; }
-//     else { high = mid-1; }
-// }
-// count = lastValid + 1;
-// ```
-// * Result = `count`
-// --
-// 💡 **Memory trigger:**
-// When you see:
-
-// > “Max elements under a sum / limit”
-// > “Order does NOT matter”
-// > → Automatically think: **sort → prefix → binary search**
-
-// ---
-// If you want, I can also make a **tiny visual diagram** for your notes showing:
-// * Sorted array → prefix sums → how binary search finds last valid index → count
-// It will make your note **instantly memorable**.
-// Do you want me to make that diagram?
-
-// }
 // console.log(answerQueries(nums, queries));
 
 //
@@ -535,10 +459,9 @@ var answerQueries = function (nums, queries) {
 //
 
 var maximumCount = function (nums) {
-  let pos = 0;
-  let neg = 0;
+  let n = nums.length;
   let left = 0;
-  let right = nums.length - 1;
+  let right = n - 1;
 
   while (left <= right) {
     let mid = Math.floor((left + right) / 2);
@@ -548,7 +471,42 @@ var maximumCount = function (nums) {
       left = mid + 1;
     }
   }
-  console.log(left);
+  let posCount = n - left;
+  left = 0;
+  right = n - 1;
+
+  while (left <= right) {
+    let mid = Math.floor((left + right) / 2);
+    if (nums[mid] < 0) {
+      left = mid + 1;
+    } else {
+      right = mid - 1;
+    }
+  }
+  let negCount = right + 1;
+
+  return Math.max(posCount, negCount);
 };
 
-console.log(maximumCount([0, 0]));
+// console.log(maximumCount([0, 0]));
+
+//
+
+//
+var specialArray = function (nums) {
+  let sorted = nums.sort((a, b) => a - b);
+  let n = sorted.length;
+
+  for (let i = 0; i < n; i++) {
+    let x = n - i;
+    if (sorted[i] >= x && (i === 0 || sorted[i - 1] < x)) {
+      return x;
+    }
+  }
+  // edge case
+  if (sorted[n - 1] < 1) return 0;
+
+  return -1;
+};
+
+console.log(specialArray([3, 5]));
