@@ -39,12 +39,12 @@ function buildTree(arr) {
   return helper();
 }
 
-function preorderTraversal(node) {
-  if (!node) return;
-  process.stdout.write(node.value + " ");
-  preorderTraversal(node.left);
-  preorderTraversal(node.right);
-}
+// function preorderTraversal(node) {
+//   if (!node) return;
+//   process.stdout.write(node.value + " ");
+//   preorderTraversal(node.left);
+//   preorderTraversal(node.right);
+// }
 
 // For Inorder Traversal ------------------
 // function inorderTraversal(node) {
@@ -61,9 +61,105 @@ function preorderTraversal(node) {
 //   postorderTraversal(node.right);
 //   process.stdout.write(node.value + " ");
 // }
+///////////////////////////////////////
+
+// function levelorderTraversal(root) {
+//   if (!root) return;
+//   const queue = [root];
+//   let i = 0;
+//   while (i < queue.length) {
+//     let size = queue.length - i;
+//     while (size--) {
+//       const node = queue[i++];
+//       process.stdout.write(node.value + " ");
+//       if (node.left) queue.push(node.left);
+//       if (node.right) queue.push(node.right);
+//     }
+//     console.log();
+//   }
+// }
+
+// function levelorderTraversal(root) {
+//   if (!root) return;
+//   const queue = [];
+//   queue.push(root);
+//   queue.push(null);
+
+//   while (queue.length) {
+//     const curr = queue.shift();
+
+//     if (curr === null) {
+//       console.log();
+//       if (queue.length === 0) break;
+//       queue.push(null);
+//     } else {
+//       process.stdout.write(curr.value + " ");
+//       if (curr.left) queue.push(curr.left);
+//       if (curr.right) queue.push(curr.right);
+//     }
+//   }
+// }
 
 const arr = [1, 2, 4, -1, -1, 5, -1, -1, 3, -1, 6, -1, -1];
 const root = buildTree(arr);
 
-console.log("Preorder Traversal");
-preorderTraversal(root);
+// console.log("Preorder Traversal");
+// preorderTraversal(root);
+
+// console.log("Levelorder Traversal");
+// levelorderTraversal(root);
+
+//
+
+//  Count Nodes -----------------
+// (DFS) recursion
+// function countNodes(root) {
+//   if (root === null) return 0;
+//   let leftNode = countNodes(root.left);
+//   let rightNode = countNodes(root.right);
+
+//   return leftNode + rightNode + 1;
+// }
+// (BFS) queue
+// function countNodes(root) {
+//   if (!root) return 0;
+//   const queue = [root];
+//   let count = 0;
+//   while (queue.length) {
+//     const node = queue.shift();
+//     count++;
+//     if (node.left) queue.push(node.left);
+//     if (node.right) queue.push(node.right);
+//   }
+//   return count;
+// }
+// let countOfNodes = countNodes(root);
+// console.log(countOfNodes);
+
+//
+
+// Sum of Nodes
+// function sumNodes(root) {
+//   if (root === null) return 0;
+//   let leftSum = sumNodes(root.left);
+//   let rightSum = sumNodes(root.right);
+//   return leftSum + rightSum + root.value;
+// }
+// let sumOfNodes = sumNodes(root);
+// console.log(sumOfNodes);
+
+//
+
+//
+function treeHeight(root) {
+  if (root === null) return 0;
+
+  let leftHeigth = treeHeight(root.left);
+  let rightHeight = treeHeight(root.right);
+
+  let myHeight = Math.max(leftHeigth, rightHeight) + 1;
+  return myHeight;
+}
+
+let heightOfTree = treeHeight(root);
+console.log(heightOfTree);
