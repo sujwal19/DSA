@@ -161,5 +161,37 @@ function treeHeight(root) {
   return myHeight;
 }
 
+// O(n^2) Approach
+function diameter(root) {
+  if (!root) return 0;
+  let diam1 = diameter(root.left);
+  let diam2 = diameter(root.right);
+  let diam3 = treeHeight(root.left) + treeHeight(root.right) + 1;
+  return Math.max(diam3, Math.max(diam1, diam2));
+}
+
+// O(n) Approach
+function diameter2(root) {
+  let diam = 0;
+
+  function dfs(node) {
+    if (!node) return 0;
+    let left = dfs(node.left);
+    let right = dfs(node.right);
+    // update diameter
+    diam = Math.max(diam, left + right);
+    // return height
+    return Math.max(left, right) + 1;
+  }
+  dfs(root);
+  return diam;
+}
+
 let heightOfTree = treeHeight(root);
-console.log(heightOfTree);
+// console.log(heightOfTree);
+
+let diameterOfTree = diameter(root);
+console.log(diameterOfTree);
+
+let diameterOfTree2 = diameter2(root);
+console.log(diameterOfTree2);
