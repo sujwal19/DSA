@@ -39,13 +39,6 @@ function buildTree(arr) {
   return helper();
 }
 
-// function preorderTraversal(node) {
-//   if (!node) return;
-//   process.stdout.write(node.value + " ");
-//   preorderTraversal(node.left);
-//   preorderTraversal(node.right);
-// }
-
 // For Inorder Traversal ------------------
 // function inorderTraversal(node) {
 //   if (!node) return;
@@ -190,8 +183,68 @@ function diameter2(root) {
 let heightOfTree = treeHeight(root);
 // console.log(heightOfTree);
 
-let diameterOfTree = diameter(root);
-console.log(diameterOfTree);
+// let diameterOfTree = diameter(root);
+// console.log(diameterOfTree);
 
-let diameterOfTree2 = diameter2(root);
-console.log(diameterOfTree2);
+// let diameterOfTree2 = diameter2(root);
+// console.log(diameterOfTree2);
+
+//
+
+function isIdentical(root, subRoot) {
+  if (root == null && subRoot == null) return true;
+  if (root == null || subRoot == null) return false;
+
+  if (root.value === subRoot.value) {
+    return (
+      isIdentical(root.left, subRoot.left) &&
+      isIdentical(root.right, subRoot.right)
+    );
+  }
+  return false;
+}
+
+var isSubtree = function (root, subRoot) {
+  if (subRoot === null) return true;
+  if (root === null) return false;
+
+  if (isIdentical(root, subRoot)) {
+    return true;
+  }
+  return isSubtree(root.left, subRoot) || isSubtree(root.right, subRoot);
+};
+
+let subTreeCheck = isSubtree([3, 4, 5, 1, 2], [4, 1, 2]);
+// console.log(subTreeCheck);
+
+//
+// Preoder Traversal -------------------------------------
+// Recursion
+// function preorderTraversal(node) {
+//   if (!node) return;
+//   process.stdout.write(node.value + " ");
+//   preorderTraversal(node.left);
+//   preorderTraversal(node.right);
+// }
+
+// Iterative
+function preorderTraversalIterative(root) {
+  let preorder = [];
+  if (root === null) return [];
+
+  let stack = [];
+  stack.push(root);
+
+  while (stack.length) {
+    let node = stack.pop();
+    preorder.push(node.value);
+
+    // push right first so left is processed first
+    if (node.right != null) stack.push(node.right);
+    if (node.left != null) stack.push(node.left);
+  }
+  return preorder;
+}
+
+let result3 = preorderTraversalIterative(root);
+console.log(result3);
