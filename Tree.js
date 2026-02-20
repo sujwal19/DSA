@@ -38,23 +38,7 @@ function buildTree(arr) {
   }
   return helper();
 }
-
-// For Inorder Traversal ------------------
-// function inorderTraversal(node) {
-//   if (!node) return;
-//   inorderTraversal(node.left);
-//   process.stdout.write(node.value + " ");
-//   inorderTraversal(node.right);
-// }
-
-// For postorder Traversal -----------------
-// function postorderTraversal(node) {
-//   if (!node) return;
-//   postorderTraversal(node.left);
-//   postorderTraversal(node.right);
-//   process.stdout.write(node.value + " ");
-// }
-///////////////////////////////////////
+///////////////////////////////////
 
 // function levelorderTraversal(root) {
 //   if (!root) return;
@@ -219,7 +203,7 @@ let subTreeCheck = isSubtree([3, 4, 5, 1, 2], [4, 1, 2]);
 
 //
 // Preoder Traversal -------------------------------------
-// Recursion
+// Recursive way.....
 // function preorderTraversal(node) {
 //   if (!node) return;
 //   process.stdout.write(node.value + " ");
@@ -227,7 +211,7 @@ let subTreeCheck = isSubtree([3, 4, 5, 1, 2], [4, 1, 2]);
 //   preorderTraversal(node.right);
 // }
 
-// Iterative
+// Iterative way.....
 function preorderTraversalIterative(root) {
   let preorder = [];
   if (root === null) return [];
@@ -235,16 +219,98 @@ function preorderTraversalIterative(root) {
   let stack = [];
   stack.push(root);
 
-  while (stack.length) {
+  while (stack.length > 0) {
     let node = stack.pop();
     preorder.push(node.value);
 
-    // push right first so left is processed first
-    if (node.right != null) stack.push(node.right);
-    if (node.left != null) stack.push(node.left);
+    // first right and then left
+    if (node.right) stack.push(node.right);
+    if (node.left) stack.push(node.left);
   }
   return preorder;
 }
 
 let result3 = preorderTraversalIterative(root);
-console.log(result3);
+// console.log(result3);
+
+//
+
+// Inorder Traversal -------------------------------------
+// Recursive way.....
+function inorderTraversal(node) {
+  if (!node) return;
+  inorderTraversal(node.left);
+  process.stdout.write(node.value + " ");
+  inorderTraversal(node.right);
+}
+// Iterative way.....
+function inorderTraversalIterative(root) {
+  if (root === null) return [];
+  let stack = [];
+  let inorder = [];
+  let node = root;
+
+  while (true) {
+    if (node !== null) {
+      stack.push(node);
+      node = node.left;
+    } else {
+      if (stack.length <= 0) break;
+      node = stack.pop();
+      inorder.push(node.value);
+      node = node.right;
+    }
+  }
+  return inorder;
+}
+
+let result4 = inorderTraversalIterative(root);
+// console.log(result4);
+
+// Postorder Traversal -------------------------------------
+// Recursive way.....
+// function postorderTraversal(node) {
+//   if (!node) return;
+//   postorderTraversal(node.left);
+//   postorderTraversal(node.right);
+//   process.stdout.write(node.value + " ");
+// }
+// Iterative way.....
+function postorderTraversalIterative(root) {
+  let st1 = [];
+  let st2 = [];
+  let postorder = [];
+
+  if (root === null) return postorder;
+
+  st1.push(root);
+
+  while (st1.length) {
+    root = st1.pop();
+    st2.push(root);
+
+    if (root.left) st1.push(root.left);
+    if (root.right) st1.push(root.right);
+  }
+
+  while (st2.length) {
+    postorder.push(st2.pop().value);
+  }
+  return postorder;
+}
+
+let result5 = postorderTraversalIterative(root);
+console.log(result5);
+
+//
+
+// let p = [1, 2, 3];
+// let q = [1, 2, 3];
+// var isSameTree = function (p, q) {
+//   if (p === null && q === null) return true;
+//   if (p === null || q === null) return false;
+
+//   if (p.val !== q.val) return false;
+//   return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+// }
+// console.log(isSameTree(p, q));
