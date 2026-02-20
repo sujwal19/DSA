@@ -275,7 +275,7 @@ let result4 = inorderTraversalIterative(root);
 //   postorderTraversal(node.right);
 //   process.stdout.write(node.value + " ");
 // }
-// Iterative way.....
+// Iterative way #1 .....
 function postorderTraversalIterative(root) {
   let st1 = [];
   let st2 = [];
@@ -298,10 +298,36 @@ function postorderTraversalIterative(root) {
   }
   return postorder;
 }
-
 let result5 = postorderTraversalIterative(root);
-console.log(result5);
+// console.log(result5);
 
+// Iterative way #2 .....
+function postorderTraversalIterativeII(root) {
+  let postorder = [];
+  let stack = [];
+  let lastVisited = null;
+  let node = root;
+  if (root === null) return postorder;
+
+  while (node || stack.length) {
+    if (node) {
+      stack.push(node);
+      node = node.left;
+    } else {
+      let peekNode = stack[stack.length - 1];
+      if (peekNode.right && lastVisited !== peekNode.right) {
+        node = peekNode.right;
+      } else {
+        stack.pop();
+        postorder.push(peekNode.value);
+        lastVisited = peekNode;
+      }
+    }
+  }
+  return postorder;
+}
+let result51 = postorderTraversalIterativeII(root);
+console.log(result51);
 //
 
 // let p = [1, 2, 3];
