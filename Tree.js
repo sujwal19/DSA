@@ -77,7 +77,7 @@ function buildTree(arr) {
 //   }
 // }
 
-const arr = [1, 2, 4, -1, -1, 5, -1, -1, 3, -1, 6, -1, -1];
+const arr = [4, 2, 7, 1, 3, 6, 9];
 const root = buildTree(arr);
 
 // console.log("Preorder Traversal");
@@ -304,8 +304,8 @@ let result5 = postorderTraversalIterative(root);
 // Iterative way #2 .....
 function postorderTraversalIterativeII(root) {
   let postorder = [];
-  let stack = [];
   let lastVisited = null;
+  let stack = [];
   let node = root;
   if (root === null) return postorder;
 
@@ -327,16 +327,37 @@ function postorderTraversalIterativeII(root) {
   return postorder;
 }
 let result51 = postorderTraversalIterativeII(root);
-console.log(result51);
+// console.log(result51);
 //
 
-// let p = [1, 2, 3];
-// let q = [1, 2, 3];
-// var isSameTree = function (p, q) {
-//   if (p === null && q === null) return true;
-//   if (p === null || q === null) return false;
+// [4,2,7,1,3,6,9]
+var invertTree = function (root) {
+  if (root === null) return null;
+  let queue = [];
+  queue.push(root);
 
-//   if (p.val !== q.val) return false;
-//   return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
-// }
-// console.log(isSameTree(p, q));
+  while (queue.length) {
+    let node = queue.shift();
+    [node.left, node.right] = [node.right, node.left];
+    if (node.left) queue.push(node.left);
+    if (node.right) queue.push(node.right);
+  }
+  return root;
+};
+
+var invertTree = function (root) {
+  if (root == null) return null;
+
+  let leftInverted = invertTree(root.left);
+  let rightInverted = invertTree(root.right);
+
+  root.left = rightInverted;
+  root.right = leftInverted;
+  return root;
+};
+
+// console.log(invertTree(root));
+
+//
+
+//
