@@ -21,21 +21,21 @@
 //
 
 // // count a char
-// function countChar(s, ch, i = 0) {
-//   if (i == s.length) return 0;
-//   return (s[i] == ch ? 1 : 0) + countChar(s, ch, i + 1);
-// }
-// console.log(countChar("sujuwal", "u"));
+function countChar(s, ch, i = 0) {
+  if (i == s.length) return 0;
+  return (s[i] == ch ? 1 : 0) + countChar(s, ch, i + 1);
+}
+// console.log(countChar("sujuwal", "u")q);
 
 //
 
-// // count vowels
-// function countVowels(s, ch = "aeiou", i = 0) {
-//   if (i == s.length) return 0;
-//   return (ch.includes(s[i]) ? 1 : 0) + countVowels(s, ch, i + 1);
-// }
-// console.log(countVowels("recursion"));
-// console.log(countVowels("bcdf"));
+// count vowels
+function countVowels(s, ch = "aeiou", i = 0) {
+  if (i == s.length) return 0;
+  return (ch.includes(s[i]) ? 1 : 0) + countVowels(s, ch, i + 1);
+}
+console.log(countVowels("recursion"));
+// console.log(countVowels("bcdf`"));
 
 //
 
@@ -104,7 +104,7 @@ function fibNTerm(n) {
   if (n === 0 || n == 1) return n;
   return fibNTerm(n - 1) + fibNTerm(n - 2);
 }
-console.log(fibNTerm(5));
+// console.log(fibNTerm(5));
 
 //
 
@@ -114,7 +114,7 @@ function climb(n) {
   if (n < 0) return 0;
   return climb(n - 1) + climb(n - 2);
 }
-console.log(climb(5));
+// console.log(climb(5));
 
 //
 
