@@ -115,3 +115,76 @@ function countOccuranceTail(arr, target, i = 0, count = 0) {
 
 // console.log(countOccurance(["m", "a", "d", "a", "m"], "m"));
 // console.log(countOccuranceTail(["m", "a", "d", "a", "m"], "m"));
+
+//
+
+let result = [];
+function printSubsets(arr, ans = [], i = 0) {
+  if (i === arr.length) {
+    result.push([...ans]);
+    return;
+  }
+
+  // Pick
+  ans.push(arr[i]);
+  printSubsets(arr, ans, i + 1);
+  ans.pop();
+
+  // Not Pick
+  printSubsets(arr, ans, i + 1);
+}
+
+printSubsets([1, 2, 3]);
+// console.log(result);
+
+// The "Pick / Not Pick" template adapts to:
+// ......
+// Subsets with duplicates (skip duplicates)
+// Combination Sum (add target constraint)
+// Permutations (track visited)
+// N-Queens (validate before recurse)
+// Palindrome partitioning
+
+//
+
+//
+// Permutations
+// var permute = function (nums) {
+//   let result = [];
+//   function backtrack(nums, idx) {
+//     if (idx === nums.length) {
+//       result.push([...nums]); // push a COPY
+//       return;
+//     }
+
+//     for (let i = idx; i < nums.length; i++) {
+//       [nums[idx], nums[i]] = [nums[i], nums[idx]]; // swap
+//       backtrack(nums, idx + 1);
+//       [nums[i], nums[idx]] = [nums[idx], nums[i]]; // backtrack (undo swap)
+//     }
+//   }
+//   backtrack(nums, 0);
+//   return result;
+// };
+
+var permute = function (nums) {
+  let result = [];
+  function backtrack(nums, idx) {
+    if (idx === nums.length) {
+      result.push([...nums]); // push a COPY
+      return;
+    }
+
+    for (let i = idx; i < nums.length; i++) {
+      [nums[idx], nums[i]] = [nums[i], nums[idx]]; // swap
+      backtrack(nums, idx + 1);
+      [nums[i], nums[idx]] = [nums[idx], nums[i]]; // backtrack (undo swap)
+    }
+  }
+  backtrack(nums, 0);
+
+  return result;
+};
+
+let permutate = permute("abc");
+console.log(permutate);
