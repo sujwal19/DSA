@@ -149,29 +149,29 @@ printSubsets([1, 2, 3]);
 
 //
 // Permutations
-// var permute = function (nums) {
-//   let result = [];
-//   function backtrack(nums, idx) {
-//     if (idx === nums.length) {
-//       result.push([...nums]); // push a COPY
-//       return;
-//     }
-
-//     for (let i = idx; i < nums.length; i++) {
-//       [nums[idx], nums[i]] = [nums[i], nums[idx]]; // swap
-//       backtrack(nums, idx + 1);
-//       [nums[i], nums[idx]] = [nums[idx], nums[i]]; // backtrack (undo swap)
-//     }
-//   }
-//   backtrack(nums, 0);
-//   return result;
-// };
-
 var permute = function (nums) {
   let result = [];
   function backtrack(nums, idx) {
     if (idx === nums.length) {
       result.push([...nums]); // push a COPY
+      return;
+    }
+    for (let i = idx; i < nums.length; i++) {
+      [nums[idx], nums[i]] = [nums[i], nums[idx]]; // swap
+      backtrack(nums, idx + 1);
+      [nums[i], nums[idx]] = [nums[idx], nums[i]]; // backtrack (undo swap)
+    }
+  }
+  backtrack(nums, 0);
+  return result;
+};
+
+var permuteStr = function (nums) {
+  let result = [];
+  nums = nums.split("");
+  function backtrack(nums, idx) {
+    if (idx === nums.length) {
+      result.push(nums.join("")); // push a COPY
       return;
     }
 
@@ -186,5 +186,5 @@ var permute = function (nums) {
   return result;
 };
 
-let permutate = permute("abc");
+let permutate = permuteStr("abc");
 console.log(permutate);
