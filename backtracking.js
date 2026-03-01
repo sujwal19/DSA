@@ -106,7 +106,6 @@ function countOccurance(arr, target, i = 0) {
 // Tail recursion
 function countOccuranceTail(arr, target, i = 0, count = 0) {
   if (i === arr.length) return count;
-
   if (target === arr[i]) {
     return countOccuranceTail(arr, target, i + 1, count + 1);
   }
@@ -124,17 +123,13 @@ function printSubsets(arr, ans = [], i = 0) {
     result.push([...ans]);
     return;
   }
-
-  // Pick
-  ans.push(arr[i]);
+  ans.push(arr[i]); // Pick
   printSubsets(arr, ans, i + 1);
   ans.pop();
 
-  // Not Pick
-  printSubsets(arr, ans, i + 1);
+  printSubsets(arr, ans, i + 1); // Not Pick
 }
-
-printSubsets([1, 2, 3]);
+printSubsets([1, 2, 3], [], 0, 7);
 // console.log(result);
 
 // The "Pick / Not Pick" template adapts to:
@@ -174,7 +169,6 @@ var permuteStr = function (nums) {
       result.push(nums.join("")); // push a COPY
       return;
     }
-
     for (let i = idx; i < nums.length; i++) {
       [nums[idx], nums[i]] = [nums[i], nums[idx]]; // swap
       backtrack(nums, idx + 1);
@@ -182,9 +176,90 @@ var permuteStr = function (nums) {
     }
   }
   backtrack(nums, 0);
-
   return result;
 };
 
 let permutate = permuteStr("abc");
-console.log(permutate);
+// console.log(permutate);
+
+//
+
+function isValid(str) {
+  let count = 0;
+  for (let char of str) {
+    if (char === "(") count++;
+    else count--;
+    if (count < 0) return false;
+  }
+  return count === 0;
+}
+function solve(curr, n, result) {
+  if (curr.length === 2 * n) {
+    if (isValid(curr)) {
+      result.push(curr.join(""));
+    }
+    return;
+  }
+  curr.push("(");
+  solve(curr, n, result);
+  curr.pop();
+
+  curr.push(")");
+  solve(curr, n, result);
+  curr.pop();
+}
+var generateParenthesis = function (n) {
+  let result = [];
+  solve([], n, result);
+  return result;
+};
+
+//
+
+//
+function getAllCombin(arr, i, combin, ans, target) {
+  if (target === 0) {
+    ans.push([...combin]);
+    return;
+  }
+  if (i >= arr.length || target < 0) {
+    return;
+  }
+  combin.push(arr[i]);
+  getAllCombin(arr, i + 1, combin, ans, target - arr[i]);
+  combin.pop();
+  let next = i + 1;
+  while (next < arr.length && arr[next] === arr[i]) {
+    next++;
+  }
+  getAllCombin(arr, next, combin, ans, target);
+}
+
+var combinationSum2 = function (candidates, target) {
+  candidates.sort((a, b) => a - b);
+  let ans = [];
+  getAllCombin(candidates, 0, [], ans, target);
+  return ans;
+};
+
+//
+
+function subsetsII(arr) {
+  let result = [];
+  arr = arr.sort((a, b) => a - b);
+
+  function subSeq(arr, index, n, temp) {
+    result.push([...temp]);
+    for (let i = index; i < arr.length; i++) {
+      if (i > index && arr[i] === arr[i - 1]) continue;
+
+      temp.push(arr[i]);
+      subSeq(arr, i + 1, n, temp);
+      temp.pop();
+    }
+  }
+  subSeq(arr, 0, arr.length, []);
+  return result;
+}
+
+console.log(subsetsII([1, 2, 2]));
