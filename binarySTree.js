@@ -13,13 +13,12 @@ function insertBST(root, val) {
   return root;
 }
 //
-let arr = [3, 2, 1, 5, 6, 4];
+let arr = [5, 3, 6, 2, 4, null, 7];
 let root = null;
 
 for (let v of arr) {
   root = insertBST(root, v);
 }
-
 //
 function inorderTraversalBST(root) {
   if (root === null) return;
@@ -83,47 +82,46 @@ function deleteTreeNode(root, key) {
   }
   return root;
 }
-// inorderTraversalBST(root);
-// console.log();
-// inorderTraversalBST(deleteTreeNode(root, 4));
+
+// inorderTraversalBST(deleteTreeNode(root, 3));
 
 //
 
-//
-function preInPostTraversal(root) {
-  let st = [];
-  st.push(root, 1);
-  let pre = [];
-  let ino = [];
-  let post = [];
+var insertIntoBST = function (root, key) {
+  if (root === null) return new TreeNode(key);
+  //
 
-  if (root === null) return;
+  function bst(node, key) {
+    if (node === null) return new TreeNode(key);
 
-  while (st.length) {
-    let it = st.pop();
-
-    if (it.num === 1) {
-      pre.push(it.node.val);
-      it.num++;
-      st.push(it);
-      if (it.node.left != null) {
-        st.push(it.node.left, 1);
-      }
+    if (key < node.val) {
+      return (node.left = bst(node.left, key));
+    } else if (key > node.val) {
+      return (node.right = bst(node.right, key));
     }
-    //
-    else if (it.num === 2) {
-      ino.push(it.node.val);
-      it.num++;
-      st.push(it);
-      if (it.node.right !== null) {
-        st.push(it.node.right, 1);
-      }
-    }
-    //
-    else {
-      post.push(it.node.val);
-    }
+    return node;
   }
-}
+  bst(root, key);
+  return root;
+};
 
-console.log(preInPostTraversal(root));
+// console.log(insertIntoBST(root, 5));
+
+//
+// Given an integer array nums where the elements are sorted
+//  in ascending order, convert it to a height-balanced binary search tree.
+let nums = [-10, -3, 0, 5, 9];
+var sortedArrayToBST = function (nums) {
+  function helper(nums, st, end) {
+    if (st > end) return null;
+
+    let mid = Math.floor(st + (end - st) / 2);
+    let root = new TreeNode(nums);
+    root.left = helper(nums, st, mid - 1);
+    root.right = helper(nums, mid + 1, end);
+    return root;
+  }
+  return helper(nums, 0, nums.length - 1);
+};
+
+console.log(sortedArrayToBST(nums));

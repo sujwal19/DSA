@@ -1,10 +1,10 @@
 //  Most asked questions in interview
-// Invert Binary Tree
-// Maximum Depth
-// Validate BST
-// Level Order Traversal
+// Invert Binary Tree -s
+// Maximum Depth -s
+// Validate BST -
+// Level Order Traversal -s
 // Lowest Common Ancestor
-// Diameter of Binary Tree
+// Diameter of Binary Tree -s
 // Serialize & Deserialize
 // Kth smallest in BST
 // Path Sum
@@ -38,65 +38,42 @@ function buildTree(arr) {
   }
   return helper();
 }
-///////////////////////////////////
 
-// function levelorderTraversal(root) {
-//   if (!root) return;
-//   const queue = [root];
-//   let i = 0;
-//   while (i < queue.length) {
-//     let size = queue.length - i;
-//     while (size--) {
-//       const node = queue[i++];
-//       process.stdout.write(node.value + " ");
-//       if (node.left) queue.push(node.left);
-//       if (node.right) queue.push(node.right);
-//     }
-//     console.log();
-//   }
-// }
-
-// function levelorderTraversal(root) {
-//   if (!root) return;
-//   const queue = [];
-//   queue.push(root);
-//   queue.push(null);
-
-//   while (queue.length) {
-//     const curr = queue.shift();
-
-//     if (curr === null) {
-//       console.log();
-//       if (queue.length === 0) break;
-//       queue.push(null);
-//     } else {
-//       process.stdout.write(curr.value + " ");
-//       if (curr.left) queue.push(curr.left);
-//       if (curr.right) queue.push(curr.right);
-//     }
-//   }
-// }
-
-const arr = [4, 2, 7, 1, 3, 6, 9];
+const arr = [4, 2, 1, -1, -1, 3, -1, -1, 7, 6, -1, -1, 9, -1, -1];
 const root = buildTree(arr);
 
-// console.log("Preorder Traversal");
-// preorderTraversal(root);
+function levelOrderByLevel(root) {
+  if (!root) return;
+  const queue = [root];
 
-// console.log("Levelorder Traversal");
-// levelorderTraversal(root);
+  while (queue.length) {
+    const levelSize = queue.length;
+    let levelNodes = [];
+    for (let i = 0; i < levelSize; i++) {
+      const node = queue.shift();
+      levelNodes.push(node.value);
+      if (node.left) queue.push(node.left);
+      if (node.right) queue.push(node.right);
+    }
+    console.log(levelNodes.join(" "));
+  }
+}
+
+console.log("Levelorder Traversal");
+levelOrderByLevel(root);
 
 //
 
-//  Count Nodes -----------------
+//  Count Nodes ------------------------------------
 // (DFS) recursion
-// function countNodes(root) {
-//   if (root === null) return 0;
-//   let leftNode = countNodes(root.left);
-//   let rightNode = countNodes(root.right);
+function countNodes(root) {
+  if (root === null) return 0;
+  let leftNode = countNodes(root.left);
+  let rightNode = countNodes(root.right);
 
-//   return leftNode + rightNode + 1;
-// }
+  return leftNode + rightNode + 1;
+}
+
 // (BFS) queue
 // function countNodes(root) {
 //   if (!root) return 0;
@@ -204,13 +181,14 @@ let subTreeCheck = isSubtree([3, 4, 5, 1, 2], [4, 1, 2]);
 //
 // Preoder Traversal -------------------------------------
 // Recursive way.....
-// function preorderTraversal(node) {
-//   if (!node) return;
-//   process.stdout.write(node.value + " ");
-//   preorderTraversal(node.left);
-//   preorderTraversal(node.right);
-// }
+function preorderTraversal(node) {
+  if (!node) return;
+  process.stdout.write(node.value + " ");
+  preorderTraversal(node.left);
+  preorderTraversal(node.right);
+}
 
+preorderTraversal(root);
 // Iterative way.....
 function preorderTraversalIterative(root) {
   let preorder = [];
@@ -359,5 +337,45 @@ var invertTree = function (root) {
 // console.log(invertTree(root));
 
 //
-
 //
+function preInPostTraversal(root) {
+  let st = [];
+  st.push({ node: root, num: 1 });
+
+  let pre = [];
+  let ino = [];
+  let post = [];
+
+  if (root === null) return;
+
+  while (st.length) {
+    let it = st.pop();
+
+    // Preorder
+    if (it.num === 1) {
+      pre.push(it.node.val);
+      it.num++;
+      st.push(it);
+
+      if (it.node.left !== null) {
+        st.push({ node: it.node.left, num: 1 });
+      }
+    }
+    // Inorder
+    else if (it.num === 2) {
+      ino.push(it.node.val);
+      it.num++;
+      st.push(it);
+
+      if (it.node.right !== null) {
+        st.push({ node: it.node.right, num: 1 });
+      }
+    }
+    // Postorder
+    else {
+      post.push(it.node.val);
+    }
+  }
+  return { pre, ino, post };
+}
+// console.log(preInPostTraversal(root));
