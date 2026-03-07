@@ -13,7 +13,7 @@ function insertBST(root, val) {
   return root;
 }
 //
-let arr = [3, 1, 4, null, 2];
+let arr = [5, 1, 4, null, null, 3, 6];
 let root = null;
 
 for (let v of arr) {
@@ -35,7 +35,7 @@ function inorderTraversalBST(root) {
 
 //
 
-function getInorderSuccessor(root) {
+function getMinNode(root) {
   while (root !== null && root.left !== null) {
     root = root.left;
   }
@@ -50,14 +50,12 @@ function deleteTreeNode(root, key) {
   } else if (key > root.val) {
     root.right = deleteTreeNode(root.right, key);
   } else {
-    if (root.left === null) {
-      return root.right;
-    } else if (root.right === null) {
-      return root.left;
-    }
-    let is = getInorderSuccessor(root.right);
-    root.val = is.val;
-    root.right = deleteTreeNode(root.right, is.val);
+    if (root.left === null) return root.right;
+    else if (root.right === null) return root.left;
+
+    const successor = getMinNode(root.right);
+    root.val = successor.val;
+    root.right = deleteTreeNode(root.right, successor.val);
   }
   return root;
 }
@@ -68,23 +66,17 @@ function deleteTreeNode(root, key) {
 
 var insertIntoBST = function (root, key) {
   if (root === null) return new TreeNode(key);
-  //
 
-  function bst(node, key) {
-    if (node === null) return new TreeNode(key);
-
-    if (key < node.val) {
-      return (node.left = bst(node.left, key));
-    } else if (key > node.val) {
-      return (node.right = bst(node.right, key));
-    }
-    return node;
+  if (key < root.val) {
+    root.left = insertIntoBST(root.left, key);
+  } else {
+    root.right = insertIntoBST(root.right, key);
   }
-  bst(root, key);
   return root;
 };
 
-// console.log(insertIntoBST(root, 5));
+// console.log(insertIntoBST(root, 9));
+// inorderTraversalBST(root);
 
 let nums = [-10, -3, 0, 5, 9];
 var sortedArrayToBST = function (nums) {
@@ -101,3 +93,20 @@ var sortedArrayToBST = function (nums) {
 };
 
 // console.log(sortedArrayToBST(nums));
+
+//
+
+function isBST(root, min, max) {
+  if (root === null) return true;
+
+  if (root.val > min && root.val < max) {
+    let left = isBST(root.left, min, root.val);
+    let right = isBST(root.right, root.val, max);
+    return left && right;
+  } else return false;
+}
+
+var isValidBST = function (root) {
+  return isBST(root, -Infinity, Infinity);
+};
+console.log(isValidBST(root));

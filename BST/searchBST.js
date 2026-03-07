@@ -12,7 +12,7 @@ function insertBST(root, val) {
   return root;
 }
 
-let arr = [6, 2, 8, 0, 4, 7, 9, null, null, 3, 5];
+let arr = [5, 1, 4, null, null, 3, 6];
 let root = null;
 
 for (let v of arr) {
@@ -70,14 +70,12 @@ function maxVal(root) {
 
 var kthSmallest = function (root, k) {
   let result = [];
-
   function inorderTrav(node) {
     if (node === null) return;
     inorderTrav(node.left);
     result.push(node.val);
     inorderTrav(node.right);
   }
-
   inorderTrav(root);
   return result[k - 1];
 };
@@ -85,6 +83,7 @@ var kthSmallest = function (root, k) {
 // console.log(kthSmallest(root, 1));
 
 //
+
 function inorderSuccessor(root) {
   let ans = null;
   while (root !== null) {
@@ -130,7 +129,7 @@ function inorderPredNSucc(root, key) {
 
   return [pred.val, succ.val];
 }
-// console.log(inorderPredNSucc(root, 3));
+console.log(inorderPredNSucc(root, 4));
 
 //
 
@@ -143,4 +142,4 @@ var lowestCommonAncestor = function (root, p, q) {
     return lowestCommonAncestor(root.right, p, q);
   } else return root.val;
 };
-console.log(lowestCommonAncestor(root, 7, 8));
+// console.log(lowestCommonAncestor(root, 5, 8));
