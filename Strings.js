@@ -75,3 +75,15 @@ let tempString = "";
 // for (let i = username.length - 1; i >= 0; i--) {
 //   tempString += username[i];
 // }
+
+let left = 0;
+let right = username.length - 1;
+username = username.split("");
+
+while (left <= right) {
+  [username[left], username[right]] = [username[right], username[left]];
+  left++;
+  right--;
+}
+
+console.log(username.join(""));

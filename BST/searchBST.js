@@ -129,7 +129,7 @@ function inorderPredNSucc(root, key) {
 
   return [pred.val, succ.val];
 }
-console.log(inorderPredNSucc(root, 4));
+// console.log(inorderPredNSucc(root, 4));
 
 //
 

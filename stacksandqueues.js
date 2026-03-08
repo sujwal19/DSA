@@ -73,26 +73,26 @@
 //
 
 // Reverse a string
-// function reverseStr(s) {
-//   let arrStr = s.split(" ");
-//   let stack = [];
+function reverseStr(s) {
+  let arrStr = s.split(" ");
+  let stack = [];
 
-//   for (const i of arrStr) {
-//     stack.push(i);
-//   }
+  for (const i of arrStr) {
+    stack.push(i);
+  }
 
-//   let finalStr = "";
+  let finalStr = "";
 
-//   while (stack.length) {
-//     let curr = stack.pop();
+  while (stack.length) {
+    let curr = stack.pop();
 
-//     if (curr) {
-//       finalStr += curr + " ";
-//     }
-//   }
-//   return finalStr.trim();
-// }
-// console.log(reverseStr("Hello World"));
+    if (curr) {
+      finalStr += curr + " ";
+    }
+  }
+  return finalStr.trim();
+}
+console.log(reverseStr("Hello World"));
 
 //
 
@@ -107,6 +107,7 @@ var isValid1 = function (s) {
     else {
       if (stack.length == 0) return false;
       let top = stack[stack.length - 1];
+      //
       if (s[i] != top) return false;
       else stack.pop();
     }

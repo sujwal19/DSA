@@ -13,7 +13,7 @@ function insertBST(root, val) {
   return root;
 }
 //
-let arr = [5, 1, 4, null, null, 3, 6];
+let arr = [2, 2, 2];
 let root = null;
 
 for (let v of arr) {
@@ -105,8 +105,25 @@ function isBST(root, min, max) {
     return left && right;
   } else return false;
 }
-
 var isValidBST = function (root) {
   return isBST(root, -Infinity, Infinity);
 };
 console.log(isValidBST(root));
+
+//
+var isValidBSTArrayLoop = function (root) {
+  let result = [];
+  function inorderTrav(node) {
+    if (node === null) return;
+    inorderTrav(node.left);
+    result.push(node.val);
+    inorderTrav(node.right);
+  }
+  inorderTrav(root);
+  for (let i = 0; i < result.length; i++) {
+    if (result[i] <= result[i - 1]) return false;
+  }
+  return true;
+};
+
+// console.log(isValidBSTArrayLoop(root));

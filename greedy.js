@@ -186,10 +186,8 @@ var merge = function (intervals) {
   const end = 1;
 
   intervals = intervals.sort((a, b) => a[start] - b[start]);
-
   let previous = intervals[0];
   let res = [previous];
-
   for (let current of intervals) {
     if (current[start] <= previous[end]) {
       previous[end] = Math.max(previous[end], current[end]);
@@ -200,19 +198,18 @@ var merge = function (intervals) {
   }
   return res;
 };
+
 // console.log(
 //   merge([
-//     [2, 3],
-//     [2, 2],
-//     [3, 3],
 //     [1, 3],
-//     [5, 7],
-//     [2, 2],
-//     [4, 6],
+//     [2, 6],
+//     [8, 10],
+//     [15, 18],
 //   ]),
 // );
 
 //
+
 var leastInterval = function (tasks, n) {
   const freq = new Array(26).fill(0);
   let count = 0;
@@ -230,4 +227,53 @@ var leastInterval = function (tasks, n) {
   return Math.max(ans, tasks.length);
 };
 
-console.log(leastInterval(["A", "C", "A", "B", "D", "B"], 1));
+// console.log(leastInterval(["A", "C", "A", "B", "D", "B"], 1));
+
+var partitionLabels = function (s) {
+  let lastIndex = {};
+  for (let i = 0; i < s.length; i++) {
+    lastIndex[s[i]] = i;
+  }
+
+  let res = [];
+  let size = 0;
+  let end = 0;
+  for (let i = 0; i < s.length; i++) {
+    size++;
+    end = Math.max(end, lastIndex[s[i]]);
+
+    if (i === end) {
+      res.push(size);
+      size = 0;
+    }
+  }
+  return res;
+};
+
+// console.log(partitionLabels("ababcbacadefegdehijhklij"));
+
+//
+
+//
+var candy = function (ratings) {
+  let arr = new Array(ratings.length).fill(1);
+
+  for (let i = 1; i < ratings.length; i++) {
+    if (ratings[i] > ratings[i - 1]) {
+      arr[i] = arr[i - 1] + 1;
+    }
+  }
+
+  for (let i = ratings.length - 2; i >= 0; i--) {
+    if (ratings[i] > ratings[i + 1]) {
+      if (arr[i] <= arr[i + 1]) {
+        arr[i] = arr[i + 1] + 1;
+      }
+    }
+  }
+
+  let ans = arr.reduce((acc, val) => acc + val, 0);
+  return ans;
+};
+
+console.log(candy([1, 2, 2]));

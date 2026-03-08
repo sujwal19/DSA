@@ -244,22 +244,67 @@ var combinationSum2 = function (candidates, target) {
 
 //
 
-function subsetsII(arr) {
+function subsetsWithDupUsingLoop(arr) {
   let result = [];
   arr = arr.sort((a, b) => a - b);
 
-  function subSeq(arr, index, n, temp) {
+  function subSeq(arr, index, temp) {
     result.push([...temp]);
     for (let i = index; i < arr.length; i++) {
       if (i > index && arr[i] === arr[i - 1]) continue;
 
       temp.push(arr[i]);
-      subSeq(arr, i + 1, n, temp);
+      subSeq(arr, i + 1, temp);
       temp.pop();
     }
   }
-  subSeq(arr, 0, arr.length, []);
+  subSeq(arr, 0, []);
   return result;
 }
+// console.log(subsetsWithDupUsingLoop([1, 2, 2]));
 
-console.log(subsetsII([1, 2, 2]));
+var subsetsWithDup = function (nums) {
+  let result = [];
+  nums.sort((a, b) => a - b);
+
+  function subSeq(arr, i, temp) {
+    if (i === arr.length) {
+      result.push([...temp]);
+      return;
+    }
+
+    temp.push(arr[i]);
+    subSeq(arr, i + 1, temp);
+    temp.pop();
+
+    let next = i + 1;
+    while (next < arr.length && arr[next] === arr[i]) {
+      next++;
+    }
+    subSeq(arr, next, temp);
+  }
+  subSeq(nums, 0, []);
+  return result;
+};
+// console.log(subsetsWithDup([1, 2, 2]));
+
+var permute = function (nums) {
+  let result = [];
+
+  function backtrack(arr, temp, result) {
+    if (temp.length === nums.length) {
+      result.push([...temp]);
+      return;
+    }
+    for (let number of arr) {
+      if (temp.includes(number)) continue;
+      temp.push(number);
+      backtrack(arr, temp, result);
+      temp.pop();
+    }
+  }
+  backtrack(nums, [], result);
+  return result;
+};
+
+console.log(permute([1, 2, 3]));

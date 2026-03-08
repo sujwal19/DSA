@@ -131,6 +131,7 @@ var twoSum = function (numbers, target) {
       left++;
     }
   }
+  return -1;
 };
 // console.log(twoSum(numbers, target));
 
@@ -218,7 +219,7 @@ var removeElement = function (nums, val) {
   return nums;
 };
 
-// console.log(removeElement(numsOfRemoveElement, val));
+console.log(removeElementBruteforce(numsOfRemoveElement, val));
 
 //
 let nums1 = [0, 1, 0, 3, 12];
@@ -240,7 +241,7 @@ var moveZeroes = function (nums) {
   return nums;
 };
 
-// console.log(moveZeroes(nums1));
+console.log(moveZeroes(nums1));
 
 //
 
@@ -251,26 +252,14 @@ var sortArrayByParity = function (nums) {
 
   for (let j = 0; j < nums.length; j++) {
     if (nums[j] % 2 == 0) {
-      let temp = nums[i];
-      nums[i] = nums[j];
-      nums[j] = temp;
-
+      [nums[i], nums[j]] = [nums[j], nums[i]];
       i++;
     }
   }
   return nums;
 };
 
-// console.log(sortArrayByParity(nums2));
-
-//
-
-//
-let arr = [1, 0, 2, 3, 0, 4, 5, 0];
-var duplicateZeros = function (arr) {};
-// console.log(duplicateZeros(arr));
-
-//
+console.log(sortArrayByParity(nums2));
 
 //
 
@@ -491,4 +480,4 @@ function goodBoy(nums, target) {
   return sum;
 }
 
-console.log(goodBoy(nums5, t1));
+// console.log(goodBoy(nums5, t1));

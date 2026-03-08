@@ -422,6 +422,7 @@ let nums = [4, 5, 2, 1];
 let queries = [3, 10, 21];
 var answerQueries = function (nums, queries) {
   let sorted = nums.sort((a, b) => a - b);
+  let n = nums.length;
 
   let prefix = [];
   prefix[0] = sorted[0];
@@ -432,59 +433,53 @@ var answerQueries = function (nums, queries) {
   let result = [];
 
   for (let q of queries) {
-    let low = 0;
-    let high = prefix.length - 1;
-    let lastValid = -1;
+    let left = 0;
+    let right = n - 1;
+    let validIndex = -1;
 
-    while (low <= high) {
-      let mid = Math.floor((low + high) / 2);
+    while (left <= right) {
+      let mid = Math.floor((left + right) / 2);
       if (prefix[mid] <= q) {
-        lastValid = mid;
-        low = mid + 1;
+        validIndex = mid;
+        left = mid + 1;
       } else {
-        high = mid - 1;
+        right = mid - 1;
       }
     }
-    result.push(lastValid + 1);
+    result.push(validIndex + 1);
   }
   return result;
 };
-// TC = O(n log n + n + N log n) → O((n + N) log n) ✅
-// Total SC = O(n + N) ✅
-
+// TC = O(n log n + n + N log n) → O((n + N) log n)
+// Total SC = O(n + N)
 // console.log(answerQueries(nums, queries));
 
 //
 
 //
-
 var maximumCount = function (nums) {
   let n = nums.length;
-  let left = 0;
-  let right = n - 1;
+  let low = 0;
+  let high = n - 1;
 
-  while (left <= right) {
-    let mid = Math.floor((left + right) / 2);
+  while (low <= high) {
+    let mid = Math.floor((low + high) / 2);
     if (nums[mid] > 0) {
-      right = mid - 1;
-    } else {
-      left = mid + 1;
-    }
+      high = mid - 1;
+    } else low = mid + 1;
   }
-  let posCount = n - left;
-  left = 0;
-  right = n - 1;
 
-  while (left <= right) {
-    let mid = Math.floor((left + right) / 2);
+  let posCount = n - low;
+  low = 0;
+  high = n - 1;
+
+  while (low <= high) {
+    let mid = Math.floor((low + high) / 2);
     if (nums[mid] < 0) {
-      left = mid + 1;
-    } else {
-      right = mid - 1;
-    }
+      low = mid + 1;
+    } else high = mid - 1;
   }
-  let negCount = right + 1;
-
+  let negCount = high + 1;
   return Math.max(posCount, negCount);
 };
 
@@ -496,17 +491,58 @@ var maximumCount = function (nums) {
 var specialArray = function (nums) {
   let sorted = nums.sort((a, b) => a - b);
   let n = sorted.length;
-
-  for (let i = 0; i < n; i++) {
+  for (let i = 0; i <= n; i++) {
     let x = n - i;
-    if (sorted[i] >= x && (i === 0 || sorted[i - 1] < x)) {
+    if (sorted[i] >= x && (i === 0 || sort[i - 1] < x)) {
       return x;
     }
   }
-  // edge case
-  if (sorted[n - 1] < 1) return 0;
-
   return -1;
 };
 
-console.log(specialArray([3, 5]));
+// console.log(specialArray([3, 4]));
+
+//
+let nums1 = [1, 2, 3, 6];
+let nums2 = [2, 3, 4, 5];
+var getCommon = function (nums1, nums2) {
+  function binarySearch(arr, target) {
+    let left = 0;
+    let right = arr.length - 1;
+
+    while (left <= right) {
+      let mid = Math.floor((left + right) / 2);
+
+      if (arr[mid] === target) return true;
+      else if (arr[mid] < target) left = mid + 1;
+      else right = mid - 1;
+    }
+    return false;
+  }
+
+  for (let num of nums1) {
+    if (binarySearch(nums2, num)) {
+      return num;
+    }
+  }
+  return -1;
+};
+
+// console.log(getCommon(nums1, nums2));
+
+//
+
+//
+var countPairs = function (nums, target) {
+  let count = 0;
+  for (let i = 0; i < nums.length; i++) {
+    for (let j = i + 1; j < nums.length; j++) {
+      if (nums[i] + nums[j] < target) {
+        count++;
+      }
+    }
+  }
+  return count;
+};
+
+console.log(countPairs([-6, 2, 5, -2, -7, -1, 3], -2));

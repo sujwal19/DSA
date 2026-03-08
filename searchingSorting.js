@@ -1,4 +1,4 @@
-let arr = [1, 5, 2, 3, 7, 4, 6];
+let arr = [1, 5, 2, 3, 7, 5, 4, 6];
 
 // function bubbleSort(arr) {
 //   let n = arr.length;
@@ -13,150 +13,199 @@ let arr = [1, 5, 2, 3, 7, 4, 6];
 // }
 // console.log(bubbleSort(arr));
 
-// function selectionSort(arr) {
-//   let n = arr.length;
+function selectionSort(arr) {
+  let n = arr.length;
 
-//   for (let i = 0; i < n - 1; i++) {
-//     let swapped = false;
+  for (let i = 0; i < n - 1; i++) {
+    let minIndex = i;
 
-//     for (let j = 0; j < n - i - 2; j++) {
-//       if (arr[j] > arr[j + 1]) {
-//         [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
-//         swapped = true;
-//       }
-//     }
-//     if (!swapped) break;
-//   }
-//   return arr;
-// }
+    for (let j = i + 1; j < n; j++) {
+      if (arr[j] < arr[minIndex]) {
+        minIndex = j;
+      }
+    }
+    if (minIndex !== i) {
+      [arr[minIndex], arr[i]] = [arr[i], arr[minIndex]];
+    }
+  }
+  return arr;
+}
 // console.log(selectionSort(arr));
 
-// function insertionSort(arr) {
-//   n = arr.length;
+function insertionSort(arr) {
+  let n = arr.length;
 
-//   for (let i = 1; i < n - 1; i++) {
-//     let key = arr[i];
-//     let j = i - 1;
-//     while (j >= 0 && arr[j] > key) {
-//       arr[j + 1] = arr[j];
-//     }
-//     arr[j + 1] = key;
-//   }
-// }
-// console.log(insertionSort(arr));
+  for (let i = 1; i < n; i++) {
+    let key = arr[i];
+    let j = i - 1;
 
-// let s = "anagram";
-// let t = "naoaram";
-// var isAnagram = function (s, t) {
-//   let count = {};
-//   for (let char of s) {
-//     count[char] = (count[char] || 0) + 1;
-//   }
-//   for (let char of t) {
-//     if (!count[char]) return false;
-//     count[char] -= 1;
-//   }
-//   return true;
-// };
+    while (j >= 0 && arr[j] > key) {
+      arr[j + 1] = arr[j];
+      j--;
+    }
+    arr[j + 1] = key;
+  }
+  return arr;
+}
+
+function insertionSortII(arr) {
+  for (let i = 0; i < arr.length - 1; i++) {
+    for (let j = i + 1; j > 0; j--) {
+      if (arr[j] < arr[j - 1]) {
+        [arr[j], arr[j - 1]] = [arr[j - 1], arr[j]];
+      } else break;
+    }
+  }
+  return arr;
+}
+
+// console.log(insertionSortII(arr));
+
+let s = "anagram";
+let t = "naoaram";
+
+var isAnagram = function (s, t) {
+  if (s.length !== t.length) return false;
+  let count = {};
+  for (let char of s) {
+    count[char] = (count[char] || 0) + 1;
+  }
+  for (let char of t) {
+    if (count[char] === undefined || count[char] === 0) return false;
+    count[char] -= 1;
+  }
+  return true;
+};
+
+var isAnagram = function (s, t) {
+  if (s.length !== t.length) return false;
+  const count = {};
+  for (let i = 0; i < s.length; i++) {
+    count[s[i]] = (count[s[i]] || 0) + 1;
+    count[t[i]] = (count[t[i]] || 0) - 1;
+  }
+  return Object.values(count).every((val) => val === 0);
+};
+
+var isAnagram = function (s, t) {
+  if (s.length !== t.length) return false;
+  return s.split("").sort().join("") === t.split("").sort().join("");
+};
+
+var isAnagram = function (s, t) {
+  if (s.length !== t.length) return false;
+  let map = new Map();
+
+  for (let char of s) {
+    map.set(char, (map.get(char) || 0) + 1);
+  }
+
+  for (let char of t) {
+    if (!map.get(char)) return false;
+    map.set(char, map.get(char) - 1);
+  }
+  return true;
+};
+
 // console.log(isAnagram(s, t));
 
 //
-nums = [1, 1, 1, 1, 1];
-target = 1;
-// true
+let searchNum = [1, 1, 1, 1, 1];
+let target = 1;
+
+var search = function (nums, target) {
+  let low = 0;
+  let high = nums.length - 1;
+
+  while (low <= high) {
+    let mid = Math.floor((low + high) / 2);
+
+    if (nums[mid] == target) return true;
+
+    // Duplicate Cases
+    if (nums[low] == nums[mid] && nums[mid] == nums[high]) {
+      low = low + 1;
+      high = high - 1;
+    }
+    //
+    else if (nums[low] <= nums[mid]) {
+      if (nums[low] <= target && target <= nums[mid]) {
+        high = mid - 1;
+      } else {
+        low = mid + 1;
+      }
+    } else {
+      if (nums[mid] <= target && target <= nums[high]) {
+        low = mid + 1;
+      } else {
+        high = mid - 1;
+      }
+    }
+  }
+  return false;
+};
+// console.log(search(searchNum, target));
 
 //
 
-// var search = function (nums, target) {
-//   let low = 0;
-//   let high = nums.length - 1;
+let nums2 = [1, 2, 3, 4, 5, 6, 6, 6, 6, 6, 7, 8];
 
-//   while (low <= high) {
-//     let mid = Math.floor((low + high) / 2);
+function binarySearch(nums, target) {
+  let left = 0;
+  let right = nums.length - 1;
 
-//     if (nums[mid] == target) return true;
+  while (left <= right) {
+    let mid = Math.floor((left + right) / 2);
 
-//     if (nums[low] == nums[mid] && nums[mid] == nums[high]) {
-//       low = low + 1;
-//       high = high - 1;
-//     } else if (nums[low] <= nums[mid]) {
-//       if (nums[low] <= target && target <= nums[mid]) {
-//         high = mid - 1;
-//       } else {
-//         low = mid + 1;
-//       }
-//     } else {
-//       if (nums[mid] <= target && target <= nums[high]) {
-//         low = mid + 1;
-//       } else {
-//         high = mid - 1;
-//       }
-//     }
-//   }
-//   return false;
-// };
+    if (nums[mid] == target) {
+      return mid;
+    } else if (nums[mid] > target) {
+      right = mid - 1;
+    } else {
+      left = mid + 1;
+    }
+  }
+  return left;
+}
+// console.log(binarySearch(nums2, 5));
 
-// //
+var lowerBound = function (nums, target) {
+  let left = 0,
+    right = nums.length - 1;
+  let ans = nums.length;
 
-// console.log(search(nums, target));
-// let nums = [1, 2, 3, 4, 5, 6, 6, 6, 6, 6, 7, 8];
-// let nums = [5, 7, 7, 8, 8, 10];
+  while (left <= right) {
+    let mid = Math.floor((left + right) / 2);
+    if (nums[mid] >= target) {
+      ans = mid;
+      right = mid - 1;
+    } else {
+      left = mid + 1;
+    }
+  }
 
-// function binarySearch(nums, target) {
-//   let left = 0;
-//   let right = nums.length - 1;
+  return ans;
+};
 
-//   while (left <= right) {
-//     let mid = Math.floor((left + right) / 2);
+var upperBound = function (nums, target) {
+  let left = 0,
+    right = nums.length - 1;
+  let ans = nums.length;
 
-//     if (nums[mid] == target) {
-//       return mid;
-//     } else if (nums[mid] > target) {
-//       right = mid - 1;
-//     } else {
-//       left = mid + 1;
-//     }
-//   }
-//   return left;
-// }
+  while (left <= right) {
+    let mid = Math.floor((left + right) / 2);
+    if (nums[mid] > target) {
+      ans = mid;
+      right = mid - 1;
+    } else {
+      left = mid + 1;
+    }
+  }
 
-// var lowerBound = function (nums, target) {
-//   let left = 0,
-//     right = nums.length - 1;
-//   let ans = nums.length;
-
-//   while (left <= right) {
-//     let mid = Math.floor((left + right) / 2);
-//     if (nums[mid] >= target) {
-//       ans = mid;
-//       right = mid - 1;
-//     } else {
-//       left = mid + 1;
-//     }
-//   }
-
-//   return ans;
-// };
-
-// var upperBound = function (nums, target) {
-//   let left = 0,
-//     right = nums.length - 1;
-//   let ans = nums.length;
-
-//   while (left <= right) {
-//     let mid = Math.floor((left + right) / 2);
-//     if (nums[mid] > target) {
-//       ans = mid;
-//       right = mid - 1;
-//     } else {
-//       left = mid + 1;
-//     }
-//   }
-
-//   return ans;
-// };
-// console.log(lowerBound(nums, 2));
-// console.log(upperBound(nums, 2));
+  return ans;
+};
+// console.log(lowerBound(nums2, 2));
+// console.log(upperBound(nums2, 2));
 
 // var countOccurrences = function (nums, target) {
 //   return upperBound(nums, target) - lowerBound(nums, target);
@@ -229,7 +278,7 @@ let nums = [3, 4, 5, 6];
 
 var searchInsert = function (nums, target) {
   let low = 0;
-  let high = nums.length;
+  let high = nums.length - 1;
   let ans = nums.length;
 
   while (low <= high) {
@@ -245,4 +294,4 @@ var searchInsert = function (nums, target) {
   return ans;
 };
 
-console.log(searchInsert(5, 6));
+console.log(searchInsert(nums, 6));
