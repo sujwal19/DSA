@@ -32,14 +32,6 @@ class maxHeap {
     return this.heap[0];
   }
 
-  print() {
-    for (let i = 0; i < this.heap.length; i++) {
-      process.stdout.write(this.heap[i] + " ");
-      // console.log(this.heap.join(" "));
-    }
-    console.log("");
-  }
-
   delete() {
     if (this.heap.length === 0) return null;
     if (this.heap.length === 1) return this.heap.pop();
@@ -78,18 +70,46 @@ class maxHeap {
   }
 }
 
-const mh = new maxHeap();
+let arr = [7, 10, 4, 20, 15];
+let k = 4;
 
-mh.insert(50);
-mh.insert(55);
-mh.insert(53);
-mh.insert(52);
-mh.insert(54);
-console.log("Initial Heap:");
-mh.print();
+var findKthSmallest = function (nums, k) {
+  let heap = new maxHeap();
 
-console.log("Deleted:", mh.delete());
-console.log("After Deletion: ");
+  for (let i = 0; i < k; i++) {
+    heap.insert(nums[i]);
+  }
 
-mh.print();
-// console.log(mh.peek());
+  for (let i = k; i < nums.length; i++) {
+    if (nums[i] < heap.peek()) {
+      heap.delete();
+      heap.insert(nums[i]);
+    }
+  }
+
+  let ans = heap.peek();
+  return ans;
+};
+
+console.log(findKthSmallest(arr, k));
+
+// is Binary Tree Heap
+
+function isCBT(root, i, nodeCount) {
+  if (root == null) return true;
+
+  if (i > nodeCount) return false;
+  else {
+    let left = isCBT(root.left, 2 * i + 1, nodeCount);
+    let right = isCBT(root.right, 2 * i + 2, nodeCount);
+    return left && right;
+  }
+}
+
+function isMaxOrder() {}
+
+function checkHeap(root) {
+  if (isCBT(root, i, nodeCount) && isMaxOrder()) {
+    return true;
+  } else return false;
+}
