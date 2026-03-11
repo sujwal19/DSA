@@ -1,4 +1,4 @@
-class maxHeap {
+class minHeap {
   constructor() {
     this.heap = [];
   }
@@ -78,7 +78,7 @@ class maxHeap {
   }
 }
 
-const mh = new maxHeap();
+const mh = new minHeap();
 
 mh.insert(50);
 mh.insert(55);
