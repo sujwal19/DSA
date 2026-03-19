@@ -1,8 +1,23 @@
-/\*
-Pattern: Sliding Window
-Problems solved:
+# 🚀 Data Structures & Algorithms (DSA)
 
-1. LeetCode 3 - Longest Substring Without Repeating Characters (Medium)
-2. LeetCode 76 - Minimum Window Substring (Hard)
-3. LeetCode 209 - Minimum Size Subarray Sum (Medium)
-   \*/
+### 📌 Overview
+
+This folder contains my Data Structures & Algorithms (DSA) practice in JavaScript. It’s structured by topics & patterns, with solutions to LeetCode, HackerRank, and other coding challenges.
+
+### 👨‍💻 Why I’m doing this:
+
+- 💡 Build strong problem-solving skills and coding intuition
+
+- 📚 Understand core concepts in arrays, strings, recursion, DP, trees, graphs, etc.
+
+- 🔄 Practice multiple approaches for the same problem to improve efficiency
+
+- 📈 Track progress across topics and patterns
+
+### 📈 Progress & Goals
+
+- ✅ Core topics covered: Arrays, Strings, Recursion, Trees, Linked Lists, DP, Graphs, Heaps, Backtracking, Two Pointers, Stack & Queue, Greedy
+
+- ⬜ Advanced topics to explore: Segment Tree, AVL/Red-Black Trees
+
+- Goal: Solve medium + hard LeetCode problems for each pattern and revise weekly
