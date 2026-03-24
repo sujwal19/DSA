@@ -42,7 +42,7 @@ var removeElement = function (nums, val) {
       l++;
     }
   }
-  return l;
+  return nums;
 };
 let removeElem = removeElement([3, 2, 2, 3], 3);
 // console.log(removeElem);
@@ -110,6 +110,25 @@ var removeDuplicates = function (nums) {
   }
   return l;
 };
-
 let removeDuplicateII = removeDuplicates([0, 0, 0, 0, 1, 1, 1, 2, 2, 3, 3, 3]);
-console.log(removeDuplicateII);
+// console.log(removeDuplicateII);
+
+//
+
+// keep only even numbers
+
+var evenChecker = function (nums) {
+  let i = 0;
+
+  for (let j = 0; j < nums.length; j++) {
+    if (nums[j] % 2 == 0) {
+      nums[i] = nums[j];
+      i++;
+    }
+  }
+
+  nums.length = i;
+  return nums;
+};
+
+console.log(evenChecker([2, 3, 4, 6, 7, 8, 9, 12]));
