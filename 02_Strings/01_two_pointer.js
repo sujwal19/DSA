@@ -1,23 +1,21 @@
-// -------------------------- Reverse String--------------------------- 3
-let username = "ghostrider101";
-let tempString = "";
+//
 
-// Method #1
-// console.log(username.split("").reverse().join(""));
+// 28. Find the Index of the First Occurrence in a String
+// Brute Force
+var strStr = function (haystack, needle) {
+  for (let j = 0; j <= haystack.length - needle.length; j++) {
+    let found = true;
 
-// Method #2
-// for (let i = username.length - 1; i >= 0; i--) {
-//   tempString += username[i];
-// }
+    for (let i = 0; i < needle.length; i++) {
+      if (haystack[j + i] !== needle[i]) {
+        found = false;
+        break;
+      }
+    }
+    if (found) return j;
+  }
+  return -1;
+};
+// console.log(strStr("leetcode", "leetc"));
 
-let left = 0;
-let right = username.length - 1;
-username = username.split("");
-
-while (left <= right) {
-  [username[left], username[right]] = [username[right], username[left]];
-  left++;
-  right--;
-}
-
-console.log(username.join(""));
+//
